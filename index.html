@@ -267,11 +267,11 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 /* Product page: tuner demo (needle over the real render) */
 .tuner { width: 86%; position: relative; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
 .demo-stage .tuner > img { width: 100%; max-width: none; max-height: none; display: block; filter: none; }
-.needle { position: absolute; width: 1.05%; border-radius: 3px; transform: translate(-50%, -50%) rotate(var(--rot, 8deg)); z-index: 2;
+.needle { position: absolute; width: 1.05%; border-radius: 3px; transform: translate(-50%, -50%); z-index: 2;
   background: linear-gradient(90deg, #ff9a1f 0%, #ffe3a0 45%, #fff3d0 55%, #ff9a1f 100%);
   box-shadow: 0 0 4px 1px #ffb040, 0 0 14px 4px rgba(255,150,40,.85), 0 0 34px 10px rgba(224,120,30,.45); transition: left .12s linear, top .12s linear, height .12s linear, opacity .3s; }
 .needle.off { opacity: 0; }
-.src-dim { position: absolute; width: 5%; height: 3%; transform: translate(-50%, -50%); background: rgba(16,8,4,.72); border-radius: 3px; transition: opacity .25s; }
+.src-dim { position: absolute; width: 4.6%; height: 3%; transform: translate(-50%, -50%); background: rgba(16,8,4,.72); border-radius: 3px; transition: opacity .25s; }
 .src-dim.lit { opacity: 0; }
 .band-dim { position: absolute; inset: 0; pointer-events: none; }
 
@@ -574,8 +574,8 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
       </div>
       <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt="">
         <div class="tuner" id="tuner" hidden role="img" aria-label="Signal with its tuning needle following the dial">
-          <img src="assets/signal-tune.webp" alt="">
-          <i class="needle" id="needle"></i><i class="src-dim" id="dim-fm" style="left:71.82%;top:50.83%"></i><i class="src-dim" id="dim-bt" style="left:71.09%;top:53.97%"></i><i class="src-dim" id="dim-aux" style="left:76.91%;top:55.55%"></i>
+          <img src="assets/signal-front-tune.webp" alt="">
+          <i class="needle" id="needle"></i><i class="src-dim" id="dim-fm" style="left:77.8%;top:44.9%"></i><i class="src-dim" id="dim-bt" style="left:77.8%;top:48.1%"></i><i class="src-dim" id="dim-aux" style="left:84.2%;top:48.1%"></i>
         </div>
         <div class="cons" id="cons" hidden role="group" aria-label="A working Console. Tap the switches or the Mode dial.">
           <img src="assets/console-front.webp" alt="Console from the front, with its switches and status lights">
@@ -758,7 +758,7 @@ const P = [
       ["What do the switches control?", "Lights, Climate and Audio switch those systems on and off across the house. Scenes moves to the next mode."],
       ["Can it go on a wall?", "Yes. Twist off the feet by hand, then hang Console on the bracket that comes in the box. The panel reads just as well at eye level."]] },
     pairs: ["count", "signal"] },
-  { id: "signal", life: "Signal on a walnut dresser in late afternoon light, next to books and a lamp", code: "J–04", name: "Signal", fn: "Audio", price: 520, img: "assets/signal.webp",
+  { id: "signal", lifeSrc: "assets/l-signal-day.webp", life: "Signal on a sunlit stone kitchen counter beside a bowl of lemons", life0: "Signal on a walnut dresser in late afternoon light, next to books and a lamp", code: "J–04", name: "Signal", fn: "Audio", price: 520, img: "assets/signal.webp",
     line: "A speaker you tune by hand.",
     head: "Find a station by hand.",
     body: "Signal is a spherical speaker under an amber dome. Turn the dial to move through FM or switch to Bluetooth or a cable, then tilt the sphere on its yoke to point the sound at you.",
@@ -769,19 +769,22 @@ const P = [
     detail: ["assets/d-grille.webp", "Perforated steel grille", "J–04 · Grille"],
     specs: [["Dimensions", "Ø 154 × 152 mm"], ["Weight", "1.6 kg"], ["Materials", "Amber acrylic, steel mesh, brushed aluminum"], ["Speaker", "Full-range driver and passive radiator, 20W"], ["Sources", "FM, Bluetooth 5.3, AUX"], ["Controls", "Tuning dial, volume dial, tilting yoke"], ["Power", "USB-C, 30W"]],
     gallery: [["assets/signal.webp", "cut", "Signal on its own"],
+              ["assets/signal-front.webp", "cut", "Signal from the front, with the tuning band and source labels"],
+              ["assets/signal-left.webp", "cut", "Signal from the left, tilted on its yoke"],
+              ["assets/l-signal-night.webp", "photo", "Signal on a bookshelf at night, city lights through the window"],
               ["assets/l-signal.webp", "photo", "Signal on a walnut dresser in late afternoon light"],
               ["assets/d-grille.webp", "fit", "Close-up of Signal's perforated steel grille"]],
     demo: { type: "tuner", pillar: "Hands first", head: "Turn the dial. See what's there.",
             body: "Drag the dial across the band and the needle follows, the way it does on Signal. Stop on a station and its name comes up. Switch to Bluetooth or AUX and the band goes dark." },
-    anatomy: { head: "Eight parts. Tuned by hand.", parts: [
-      [50.9, 18.5, "Amber acrylic dome", "Lets you see the driver and carries the glow of the band."],
-      [20.6, 38.6, "Tuning band", "FM from 88 to 108, with a needle that glows at the station you're on."],
-      [79.6, 51.6, "Source labels", "FM, Bluetooth and AUX. The one you're using lights up."],
-      [93.6, 58, "Tuning dial", "Knurled aluminum. Turn it to move the needle across the band."],
-      [4.5, 37, "Volume dial", "On the other side of the yoke, with the same feel."],
-      [40.9, 70, "Steel mesh grille", "Perforated steel over a full-range driver."],
-      [11.8, 66, "Pivot yoke", "Tilts the sphere so the sound points at you."],
-      [56.5, 94.1, "Base and status pip", "Weighted aluminum. The pip glows when Signal is on."]] },
+    anatomy: { img: "assets/signal-front.webp", alt: "Signal from the front with numbered parts", head: "Eight parts. Tuned by hand.", parts: [
+      [49.7, 15.6, "Amber acrylic dome", "Lets you see the driver and carries the glow of the band."],
+      [23.8, 40.7, "Tuning band", "FM from 88 to 108, with a needle that glows at the station you're on."],
+      [88.5, 41.5, "Source labels", "FM, Bluetooth and AUX. The one you're using lights up."],
+      [97.9, 44.7, "Tuning dial", "Knurled aluminum. Turn it to move the needle across the band."],
+      [2.4, 44.7, "Volume dial", "On the other side of the yoke, with the same feel."],
+      [49.7, 67.7, "Steel mesh grille", "Perforated steel over a full-range driver."],
+      [11.1, 71.2, "Pivot yoke", "Tilts the sphere so the sound points at you."],
+      [78, 92.5, "Base and status pip", "Weighted aluminum. The pip glows when Signal is on."]] },
     box: ["Signal", "1.5 m braided USB-C cable", "30W USB-C power adapter", "1 m 3.5 mm AUX cable", "Microfiber care cloth"],
     faq: { head: "Before you tune in.", items: [
       ["Does Signal need an app?", "No. FM and AUX work out of the box. Bluetooth pairs once from your phone's settings."],
@@ -895,15 +898,15 @@ function renderProduct(p) {
   $("pv-next").href = "#" + next.id; $("pv-next").querySelector("strong").textContent = next.code + " " + next.name.toUpperCase();
   document.title = p.name + " · Jupiter Co.";
 }
-// Tick centers on the render (x, y, length in px of 1100 × 1082) for 88, 92 … 108
-const TICKS = [[187, 425, 144], [254, 438, 149], [338, 452, 152], [435, 470, 155], [551, 492, 160], [662, 516, 160]];
+// Tick centers on the front render (x, y, needle length in px of 1100 × 1008) for 88, 92 … 108
+const TICKS = [[216, 439, 134], [308, 439, 134], [402, 439, 134], [504, 439, 134], [621, 439, 134], [730, 439, 134]];
 const STATIONS = [[89.3, "Late jazz"], [94.7, "Morning news"], [101.1, "Classics"], [105.9, "New music"]];
 let src = "fm";
 function setFreq(f) {
   f = Math.round(f * 10) / 10; $("freq").value = f;
   const t = (f - 88) / 4, i = Math.min(4, Math.floor(t)), k = t - i, A = TICKS[i], B = TICKS[i + 1];
   const x = A[0] + (B[0] - A[0]) * k, y = A[1] + (B[1] - A[1]) * k, h = A[2] + (B[2] - A[2]) * k;
-  const n = $("needle"); n.style.left = (x / 11) + "%"; n.style.top = (y / 10.82) + "%"; n.style.height = (h / 10.82) + "%";
+  const n = $("needle"); n.style.left = (x / 11) + "%"; n.style.top = (y / 10.08) + "%"; n.style.height = (h / 10.08) + "%";
   $("freq-out").textContent = f.toFixed(1);
   const hit = STATIONS.find(([s]) => Math.abs(s - f) <= 0.2);
   $("station").textContent = src !== "fm" ? (src === "bt" ? "Playing from your phone" : "Playing from a cable") : (hit ? hit[1] : "Static");
