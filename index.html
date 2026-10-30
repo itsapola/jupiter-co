@@ -52,7 +52,13 @@ h1, h2, h3 { font-weight: 300; letter-spacing: -0.02em; line-height: 1.04; text-
 header { position: absolute; inset: 0 0 auto 0; z-index: 10; }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 28px; padding-bottom: 28px; position: relative; }
 .lockup { display: flex; align-items: center; gap: 12px; }
-.lockup .sym { height: 30px; width: auto; filter: invert(1); }
+.lockup .sym { height: 30px; width: auto; color: var(--lunar); overflow: visible; }
+/* Symbol: on hover the ring's right side dips, then the moon rolls down it */
+.sym .beam { transform-box: view-box; transform-origin: 450px 285px; transition: transform .45s cubic-bezier(.4,0,.2,1) .35s; }
+.sym .moon { transform-box: fill-box; transform-origin: center; transition: transform .6s cubic-bezier(.45,0,.25,1); }
+.lockup:hover .sym .beam, .lockup:focus-visible .sym .beam { transform: rotate(18deg); transition-delay: 0s; }
+.lockup:hover .sym .moon, .lockup:focus-visible .sym .moon { transform: translate(126px, -31px) rotate(160deg); transition-delay: .4s; }
+@media (prefers-reduced-motion: reduce) { .sym .beam, .sym .moon { transition: none; } }
 .lockup .wm { height: 22px; width: auto; }
 .nav ul { list-style: none; display: flex; gap: 36px; }
 .nav ul a { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
@@ -395,7 +401,17 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
 <header>
   <nav class="nav wrap" aria-label="Main">
     <a href="#top" class="lockup" aria-label="Jupiter Co. home">
-      <img class="sym" src="assets/symbol.png" alt="">
+      <svg class="sym" viewBox="0 0 900 543" aria-hidden="true">
+        <defs><mask id="sym-gap" maskUnits="userSpaceOnUse" x="-100" y="-100" width="1100" height="743">
+          <rect x="-100" y="-100" width="1100" height="743" fill="#fff"/>
+          <g class="beam"><line x1="10" y1="393" x2="890" y2="177" stroke="#000" stroke-width="44" stroke-linecap="round"/>
+            <circle class="moon" cx="695" cy="138" r="64" fill="#000"/></g>
+        </mask></defs>
+        <circle cx="447" cy="271" r="263" fill="none" stroke="currentColor" stroke-width="14" mask="url(#sym-gap)"/>
+        <g class="beam"><line x1="10" y1="393" x2="890" y2="177" stroke="currentColor" stroke-width="16" stroke-linecap="round"/>
+          <circle class="moon" cx="695" cy="138" r="50" fill="none" stroke="currentColor" stroke-width="12"/>
+          <circle class="moon" cx="695" cy="138" r="2" fill="none"/></g>
+      </svg>
       <img class="wm" src="assets/wordmark-white.png" alt="Jupiter Co.">
     </a>
     <ul id="menu">
