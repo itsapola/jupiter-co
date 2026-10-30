@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jupiter Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Michroma&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Palette 04, sampled from the renders: 50 / 25 / 10 / 8 / 4 / 3 */
+  --deep-space: #141518;   /* base */
+  --lunar: #EDE8E1;        /* warm paper, light sections */
+  --champagne: #C9B6A3;    /* brushed aluminum */
+  --amber: #E08A2C;        /* lit acrylic, accent on dark */
+  --filament: #FCDFA4;     /* the glowing ring */
+  --copper: #8A3A0A;       /* acrylic in shadow, accent on light */
+  --ink-soft: #4B4741;
+  --grey-on-dark: #B3ABA2;
+  --line-dark: rgba(237,232,225,.14);
+  --line-light: rgba(20,21,24,.16);
+  /* Michroma stands in for Eurostile Extended, Hanken Grotesk for Neue Montreal */
+  --f-display: "Michroma", "Eurostile Extended", "Eurostile", sans-serif;
+  --f-body: "Hanken Grotesk", "Neue Montreal", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --gutter: clamp(20px, 4vw, 56px);
+  --max: 1360px;
+  /* Layout: alternating Deep Space / Lunar bands, numbered like an equipment manual */
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--deep-space); color: var(--lunar); font-family: var(--f-body); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
+h1, h2, h3 { font-weight: 300; letter-spacing: -0.02em; line-height: 1.04; text-wrap: balance; }
+[hidden] { display: none !important; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; display: flex; align-items: center; gap: 12px; }
+.eyebrow b { font-weight: 500; color: var(--amber); }
+.light .eyebrow b { color: var(--copper); }
+.cta { display: inline-flex; align-items: center; gap: 16px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+.cta .ring { width: 44px; height: 44px; border: 1px solid currentColor; border-radius: 50%; display: grid; place-items: center; transition: background .25s, color .25s, border-color .25s; }
+.cta:hover .ring { background: var(--amber); color: var(--deep-space); border-color: var(--amber); }
+.arrow { width: 14px; height: 14px; }
+
+/* Header */
+header { position: absolute; inset: 0 0 auto 0; z-index: 10; }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 28px; padding-bottom: 28px; position: relative; }
+.lockup { display: flex; align-items: center; gap: 12px; }
+.lockup .sym { height: 30px; width: auto; filter: invert(1); }
+.lockup .wm { height: 22px; width: auto; }
+.nav ul { list-style: none; display: flex; gap: 36px; }
+.nav ul a { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+.nav ul a:hover { opacity: 1; color: var(--amber); }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.cart { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; }
+.menu-btn { display: none; font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; border: 1px solid var(--line-dark); padding: 8px 14px; border-radius: 40px; }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; padding: 170px 0 120px; background: var(--deep-space); min-height: 760px; display: flex; align-items: center; }
+.hero > .wrap { width: 100%; position: relative; z-index: 2; }
+.hero-bg { position: absolute; top: 0; right: 0; bottom: 0; width: 74%; margin: 0; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 58% center; }
+.hero-bg::after { content: ""; position: absolute; inset: 0; background:
+  linear-gradient(90deg, var(--deep-space) 0%, rgba(20,21,24,.75) 22%, rgba(20,21,24,0) 55%),
+  linear-gradient(180deg, rgba(20,21,24,.7) 0%, rgba(20,21,24,0) 22%, rgba(20,21,24,0) 75%, rgba(20,21,24,.6) 100%); }
+.hero-copy { max-width: 600px; }
+.hero-tag-wrap { position: absolute; right: var(--gutter); bottom: -72px; }
+.hero h1 { font-size: clamp(44px, 5.6vw, 86px); margin: 28px 0 26px; max-width: 13ch; }
+.hero .sub { font-size: clamp(18px, 1.7vw, 23px); color: var(--grey-on-dark); max-width: 34ch; margin-bottom: 44px; font-weight: 300; }
+.hero-tag { display: flex; gap: 14px; align-items: center; color: var(--lunar); text-shadow: 0 1px 8px rgba(0,0,0,.6); }
+.hero-tag:hover { color: var(--amber); }
+
+/* Sections */
+.light { background: var(--lunar); color: var(--deep-space); }
+section { padding: 104px 0; }
+.sec-head { display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: end; margin-bottom: 56px; }
+h2.big { font-size: clamp(36px, 4.4vw, 64px); margin-top: 22px; }
+.sec-head p { max-width: 40ch; font-size: 18px; color: var(--ink-soft); justify-self: end; }
+
+/* Collection */
+.grid5 { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line-light); }
+.card { padding: 24px 22px 28px; border-right: 1px solid var(--line-light); display: flex; flex-direction: column; gap: 6px; transition: background .3s; }
+.card:first-child { border-left: 1px solid var(--line-light); }
+.card:hover { background: #e3ddd4; }
+.card .pic { height: 190px; display: grid; place-items: center; margin: 4px 0 22px; }
+.card .pic img { max-height: 190px; max-width: 100%; width: auto; object-fit: contain; filter: drop-shadow(0 18px 22px rgba(20,21,24,.22)); transition: transform .4s; }
+.card:hover .pic img { transform: translateY(-6px); }
+.card .row { display: flex; justify-content: space-between; color: var(--ink-soft); }
+.card h3 { font-family: var(--f-display); font-size: 17px; letter-spacing: .08em; font-weight: 400; }
+.card .fn { color: var(--copper); }
+.card p { font-size: 15px; color: var(--ink-soft); margin-top: 6px; }
+.card .more { margin-top: auto; padding-top: 16px; display: flex; align-items: center; gap: 8px; color: var(--deep-space); }
+.card:hover .more { color: var(--copper); }
+.coll-foot { margin-top: 32px; color: var(--ink-soft); }
+
+/* Philosophy */
+.philo { background:
+  radial-gradient(70% 90% at 85% 120%, rgba(224,138,44,.20), rgba(224,138,44,0) 60%), var(--deep-space); border-top: 1px solid var(--line-dark); }
+.philo-top { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: end; }
+.philo-top p { color: var(--grey-on-dark); font-size: 18px; max-width: 42ch; }
+.philo-shot { margin-top: 64px; aspect-ratio: 21/9; overflow: hidden; border-radius: 2px; position: relative; }
+.philo-shot img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+.philo-shot figcaption { position: absolute; left: 20px; bottom: 16px; color: var(--lunar); text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+.pillars { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 80px; }
+.pillars li { border-top: 1px solid var(--line-dark); padding-top: 24px; }
+.pillars .n { color: var(--amber); }
+.pillars h3 { font-family: var(--f-display); font-size: 16px; letter-spacing: .08em; font-weight: 400; margin: 14px 0 12px; text-transform: uppercase; }
+.pillars p { font-size: 16px; color: var(--grey-on-dark); max-width: 34ch; }
+
+/* Details */
+.details-grid { display: grid; grid-template-columns: 4fr 4fr 4fr; gap: 20px; align-items: start; }
+.details-text { display: flex; flex-direction: column; gap: 24px; padding-right: 20px; }
+.details-text h2 { font-size: clamp(32px, 3.4vw, 50px); }
+.details-text p { color: var(--ink-soft); font-size: 17px; }
+figure.shot { position: relative; overflow: hidden; border-radius: 2px; background: var(--deep-space); }
+figure.shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+figure.shot:hover img { transform: scale(1.04); }
+figure.shot figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 14px 12px; color: var(--lunar); font-size: 11px; background: linear-gradient(180deg, rgba(20,21,24,0), rgba(20,21,24,.9) 65%); }
+figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
+.cap-big { aspect-ratio: 1; }
+.crops { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.crops figure { aspect-ratio: 1; }
+.materials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line-light); }
+.mat { display: flex; flex-direction: column; gap: 10px; }
+.mat img { aspect-ratio: 4/1; width: 100%; object-fit: cover; border-radius: 2px; }
+.mat .mono { color: var(--ink-soft); font-size: 11px; }
+.mat strong { font-weight: 500; font-size: 16px; }
+
+/* Observatory */
+.obs-grid { display: grid; grid-template-columns: 4fr 8fr; gap: 56px; align-items: start; }
+.obs-intro h2 { margin-top: 22px; }
+.articles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.article { display: flex; flex-direction: column; border: 1px solid var(--line-dark); border-radius: 2px; overflow: hidden; }
+.article img { aspect-ratio: 4/3; width: 100%; object-fit: cover; }
+.article .body { padding: 20px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.article .body .mono { color: var(--grey-on-dark); font-size: 11px; display: flex; justify-content: space-between; }
+.article h3 { font-size: 21px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 400; }
+
+/* Product view */
+.pv-hero { padding: 140px 0 88px; background:
+  radial-gradient(50% 70% at 30% 55%, rgba(224,138,44,.22), rgba(224,138,44,0) 62%),
+  linear-gradient(180deg, #1b1a1a 0%, var(--deep-space) 100%); }
+.crumb { display: flex; gap: 10px; color: var(--grey-on-dark); margin-bottom: 40px; }
+.crumb a:hover { color: var(--amber); }
+.pv-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: center; }
+.pv-stage { display: grid; place-items: center; min-height: 420px; }
+.pv-stage img { max-height: 560px; width: auto; filter: drop-shadow(0 40px 60px rgba(0,0,0,.55)) drop-shadow(0 0 80px rgba(224,138,44,.18)); }
+.pv-info .meta { display: flex; gap: 18px; color: var(--grey-on-dark); }
+.pv-info .meta .fn { color: var(--amber); }
+.pv-name { font-family: var(--f-display); font-size: clamp(30px, 3.4vw, 46px); letter-spacing: .06em; font-weight: 400; margin: 18px 0 20px; }
+.pv-info h2 { font-size: clamp(26px, 2.4vw, 34px); margin-bottom: 18px; }
+.pv-info p { color: var(--grey-on-dark); font-size: 17px; max-width: 44ch; }
+.buy { display: flex; align-items: center; gap: 24px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line-dark); flex-wrap: wrap; }
+.price { font-family: var(--f-mono); font-size: 20px; letter-spacing: .04em; }
+.add { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; background: var(--amber); color: var(--deep-space); padding: 16px 26px; border-radius: 40px; transition: background .25s; }
+.add:hover { background: var(--filament); }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.features li { list-style: none; border-top: 1px solid var(--line-light); padding-top: 22px; }
+.features .n { color: var(--copper); }
+.features h3 { font-family: var(--f-display); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; font-weight: 400; margin: 12px 0 10px; }
+.features p { color: var(--ink-soft); font-size: 16px; max-width: 36ch; }
+.pv-life { margin-top: 88px; aspect-ratio: 16/9; overflow: hidden; border-radius: 2px; position: relative; }
+.pv-life img { width: 100%; height: 100%; object-fit: cover; }
+.pv-life figcaption { position: absolute; left: 20px; bottom: 16px; color: var(--lunar); text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+.pv-spec { display: grid; grid-template-columns: 5fr 7fr; gap: 56px; margin-top: 88px; align-items: start; }
+.pv-spec figure { aspect-ratio: 1; }
+.specs { border-top: 1px solid var(--line-light); }
+.specs div { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line-light); }
+.specs dt { color: var(--ink-soft); }
+.specs dd { font-size: 16px; }
+.pager { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line-dark); }
+.pager a { padding: 40px var(--gutter); display: flex; flex-direction: column; gap: 8px; transition: background .25s; }
+.pager a:hover { background: #1d1e22; }
+.pager a + a { border-left: 1px solid var(--line-dark); text-align: right; align-items: flex-end; }
+.pager .mono { color: var(--grey-on-dark); }
+.pager strong { font-family: var(--f-display); font-weight: 400; font-size: 20px; letter-spacing: .08em; }
+
+/* Footer */
+footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
+.foot-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+.foot-top .wm { height: 40px; width: auto; }
+.foot-top p { color: var(--grey-on-dark); margin-top: 16px; font-size: 16px; }
+.foot-top ul { list-style: none; display: flex; gap: 32px; flex-wrap: wrap; }
+.foot-top ul a:hover { color: var(--amber); }
+.foot-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line-dark); color: var(--grey-on-dark); }
+.foot-bottom a { color: var(--lunar); border-bottom: 1px solid var(--amber); }
+.foot-bottom a:hover { color: var(--amber); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .pv-stage img { animation: float 7s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1080px) {
+  .menu-btn { display: inline-block; }
+  .nav ul { display: none; position: absolute; top: 84px; left: var(--gutter); right: var(--gutter); flex-direction: column; gap: 0; background: #1d1e22; border: 1px solid var(--line-dark); border-radius: 4px; padding: 8px 0; }
+  .nav ul.open { display: flex; }
+  .nav ul a { display: block; padding: 14px 20px; }
+  .hero-grid, .sec-head, .details-grid, .obs-grid, .philo-top, .pv-grid, .pv-spec { grid-template-columns: 1fr; }
+  .sec-head p { justify-self: start; }
+  .hero { display: block; min-height: 0; padding: 120px 0 0; }
+  .hero-bg { position: relative; width: 100%; aspect-ratio: 3/2; margin-top: 48px; }
+  .hero-bg::after { background: linear-gradient(180deg, var(--deep-space) 0%, rgba(20,21,24,0) 25%); }
+  .hero-tag-wrap { position: static; margin-top: 40px; }
+  .philo-shot { aspect-ratio: 4/3; }
+  .pv-life { aspect-ratio: 4/3; margin-top: 56px; }
+  .details-text { padding-right: 0; }
+  .pillars, .features { grid-template-columns: 1fr; gap: 28px; margin-top: 48px; }
+  .features { margin-top: 0; }
+  .pv-stage { min-height: 0; }
+  .pv-stage img { max-height: 380px; }
+  .pv-spec figure { max-width: 520px; }
+  /* collection becomes a swipe row */
+  .grid5 { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-top: 0; gap: 0; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter); scrollbar-width: none; }
+  .grid5::-webkit-scrollbar { display: none; }
+  .card { flex: 0 0 min(300px, 72%); scroll-snap-align: start; border: 1px solid var(--line-light); border-left: 0; }
+  .card:first-child { border-left: 1px solid var(--line-light); }
+}
+@media (max-width: 700px) {
+  section { padding: 80px 0; }
+  .articles { grid-template-columns: 1fr; }
+  .materials { grid-template-columns: 1fr; }
+  .hero { padding-top: 120px; }
+  .lockup .wm { height: 18px; }
+  .lockup .sym { height: 24px; }
+  .pager a { padding: 28px var(--gutter); }
+  .pager strong { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="arr" viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+  <symbol id="arr-l" viewBox="0 0 16 16"><path d="M14 8H3M7 4L3 8l4 4" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+</svg>
+
+<header>
+  <nav class="nav wrap" aria-label="Main">
+    <a href="#top" class="lockup" aria-label="Jupiter Co. home">
+      <img class="sym" src="assets/symbol.png" alt="">
+      <img class="wm" src="assets/wordmark-white.png" alt="Jupiter Co.">
+    </a>
+    <ul id="menu">
+      <li><a href="#objects">Objects</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#observatory">The Observatory</a></li>
+      <li><a href="#support">Support</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="cart" id="cart" aria-live="polite">CART (0)</span>
+      <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+<div id="view-home">
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-copy">
+        <div class="eyebrow"><b>—</b> Est. Tomorrow</div>
+        <h1>The future was supposed to be beautiful.</h1>
+        <p class="sub">Home technology you'll want on display.</p>
+        <a href="#objects" class="cta"><span>Explore the collection</span><span class="ring"><svg class="arrow"><use href="#arr"/></svg></span></a>
+      </div>
+      <div class="hero-tag-wrap"><a href="#flare" class="hero-tag mono"><span>J–01 Flare · Ambient light</span><svg class="arrow"><use href="#arr"/></svg></a></div>
+    </div>
+    <figure class="hero-bg"><img src="assets/l-flare.webp" alt="Flare glowing on a stone counter at sunset, with a window view of hills behind" width="1536" height="1024"></figure>
+  </section>
+
+  <!-- COLLECTION -->
+  <section class="light" id="objects">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow"><b>01</b> / The Collection</div>
+          <h2 class="big">Five objects. Nothing to hide.</h2>
+        </div>
+        <p>Light, time, sound, control and power, designed to live in plain sight.</p>
+      </div>
+      <div class="grid5" id="cards"></div>
+      <p class="coll-foot mono">Brushed aluminum · Amber acrylic · Analog controls</p>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="philo" id="philosophy">
+    <div class="wrap">
+      <div class="philo-top">
+        <div>
+          <div class="eyebrow"><b>02</b> / Philosophy</div>
+          <h2 class="big">Technology should be seen.</h2>
+        </div>
+        <p>Somewhere along the way, home tech learned to hide. It went beige, then flat, then invisible, tucked into cabinets and buried in apps. Jupiter Co. builds the opposite: objects with a face, a dial and a reason to stay on the counter.</p>
+      </div>
+      <figure class="philo-shot"><img src="assets/l-console.webp" alt="Console on a walnut sideboard, lit amber, next to a lamp, books and a framed moon photograph" loading="lazy"><figcaption class="mono">J–03 Console · At home</figcaption></figure>
+      <ol class="pillars">
+        <li><span class="mono n">01</span><h3>In plain sight.</h3><p>If it has to be hidden, we haven't finished designing it. Every object earns its place on the counter.</p></li>
+        <li><span class="mono n">02</span><h3>Show your work.</h3><p>Light, sound or a dial tells you what each object is doing at a glance. No mystery states.</p></li>
+        <li><span class="mono n">03</span><h3>Hands first.</h3><p>Every core function works with a dial, a switch or a touch. The app is optional.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="light" id="details">
+    <div class="wrap">
+      <div class="details-grid">
+        <div class="details-text">
+          <div class="eyebrow"><b>03</b> / The Details</div>
+          <h2>Made to be seen. Designed to be touched.</h2>
+          <p>Brushed aluminum. Amber acrylic that glows from within. Knurled steel dials with real resistance. Every surface is chosen for how it looks under lamplight and how it feels under your thumb.</p>
+        </div>
+        <figure class="shot cap-big">
+          <img src="assets/d-cap.webp" alt="Flare's brushed aluminum cap engraved with the Jupiter Co. symbol, inside amber acrylic" loading="lazy">
+          <figcaption class="mono">Signature materials<span>Brushed aluminum + translucent acrylic</span></figcaption>
+        </figure>
+        <div class="crops">
+          <figure class="shot"><img src="assets/d-knob.webp" alt="Knurled dimmer dial on Flare" loading="lazy"><figcaption class="mono">J–01 · Dimmer</figcaption></figure>
+          <figure class="shot"><img src="assets/d-grille.webp" alt="Perforated steel speaker grille on Signal" loading="lazy"><figcaption class="mono">J–04 · Grille</figcaption></figure>
+          <figure class="shot"><img src="assets/d-digits.webp" alt="Flip digits reading 08 on Count" loading="lazy"><figcaption class="mono">J–02 · Flip digits</figcaption></figure>
+          <figure class="shot"><img src="assets/d-dials.webp" alt="Scroll dial with amber ring on Console" loading="lazy"><figcaption class="mono">J–03 · Scroll dial</figcaption></figure>
+        </div>
+      </div>
+      <div class="materials">
+        <div class="mat"><img src="assets/m-alu.webp" alt="Brushed aluminum surface" loading="lazy"><span class="mono">Housing</span><strong>Brushed aluminum</strong></div>
+        <div class="mat"><img src="assets/m-acr.webp" alt="Amber acrylic lit from inside" loading="lazy"><span class="mono">Shell</span><strong>Amber acrylic</strong></div>
+        <div class="mat"><img src="assets/m-mesh.webp" alt="Perforated steel mesh" loading="lazy"><span class="mono">Grille</span><strong>Steel mesh</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBSERVATORY -->
+  <section id="observatory">
+    <div class="wrap">
+      <div class="obs-grid">
+        <div class="obs-intro">
+          <div class="eyebrow"><b>04</b> / The Observatory</div>
+          <h2 class="big">Notes on the future we were promised.</h2>
+        </div>
+        <div class="articles">
+          <article class="article">
+            <img src="assets/lineup.webp" alt="The five Jupiter Co. objects in a row" loading="lazy">
+            <div class="body"><span class="mono"><span>Culture</span><span>Coming soon</span></span><h3>The Space Age Home, Revisited</h3></div>
+          </article>
+          <article class="article">
+            <img src="assets/d-dials.webp" alt="Console's knurled Scroll dial" loading="lazy">
+            <div class="body"><span class="mono"><span>Design</span><span>Coming soon</span></span><h3>The Lost Language of Everyday Objects</h3></div>
+          </article>
+          <article class="article">
+            <img src="assets/o-glow.webp" alt="Flare's ring of light through amber acrylic" loading="lazy">
+            <div class="body"><span class="mono"><span>Living</span><span>Coming soon</span></span><h3>A Case for Keeping Things in View</h3></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PRODUCT VIEW -->
+<div id="view-product" hidden>
+  <section class="pv-hero">
+    <div class="wrap">
+      <nav class="crumb mono" aria-label="Breadcrumb"><a href="#objects">Objects</a><span>/</span><span id="pv-crumb"></span></nav>
+      <div class="pv-grid">
+        <div class="pv-stage"><img id="pv-img" src="" alt=""></div>
+        <div class="pv-info">
+          <div class="meta mono"><span id="pv-code"></span><span class="fn" id="pv-fn"></span></div>
+          <h1 class="pv-name" id="pv-name"></h1>
+          <h2 id="pv-head"></h2>
+          <p id="pv-body"></p>
+          <div class="buy">
+            <span class="price" id="pv-price"></span>
+            <button class="add" id="pv-add" type="button">Add to cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="light">
+    <div class="wrap">
+      <ol class="features" id="pv-features"></ol>
+      <figure class="pv-life"><img id="pv-life" src="" alt="" loading="lazy"><figcaption class="mono" id="pv-life-cap"></figcaption></figure>
+      <div class="pv-spec">
+        <figure class="shot"><img id="pv-detail" src="" alt="" loading="lazy"><figcaption class="mono" id="pv-detail-cap"></figcaption></figure>
+        <div>
+          <div class="eyebrow"><b id="pv-code2"></b> / Specifications</div>
+          <dl class="specs" id="pv-specs" style="margin-top:24px"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+  <nav class="pager" aria-label="More objects">
+    <a id="pv-prev" href="#"><span class="mono">Previous</span><strong></strong></a>
+    <a id="pv-next" href="#"><span class="mono">Next</span><strong></strong></a>
+  </nav>
+</div>
+</main>
+
+<footer id="support">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <img class="wm" src="assets/wordmark-white.png" alt="Jupiter Co.">
+        <p>Home technology you'll want on display.</p>
+      </div>
+      <ul class="mono">
+        <li><a href="#objects">Objects</a></li>
+        <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="#observatory">The Observatory</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+    </div>
+    <div class="foot-bottom mono">
+      <span>© 2026 Jupiter Co.</span>
+      <span>A concept brand by Ashley Pola · <a href="https://www.ashleypola.com">Read the case study</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const P = [
+  { id: "flare", life: "Flare glowing on a stone counter at sunset, with a window view of hills behind", code: "J–01", name: "Flare", fn: "Ambient light", price: 340, img: "assets/flare.webp",
+    line: "A ring of warm light with a dial you can feel.",
+    head: "Warm light, dimmed by hand.",
+    body: "Flare is a ring of warm light set inside a shell of amber acrylic. Turn the dial on its base for a low glow at night or full light for reading.",
+    alt: "Flare lamp with a glowing ring inside amber acrylic on a brushed aluminum base",
+    f: ["Amber acrylic and brushed aluminum, made to sit on a sideboard or nightstand where people can see it.",
+        "One amber pip on the base tells you Flare has power. The light shows the rest.",
+        "A knurled steel dial takes it from a low glow to full brightness, and it stays where you leave it."],
+    detail: ["assets/d-knob.webp", "Knurled steel dimmer dial", "J–01 · Dimmer"],
+    specs: [["Dimensions", "Ø 200 × 110 mm"], ["Materials", "Brushed aluminum, amber acrylic, steel"], ["Light", "Warm white, 2700K"], ["Control", "Analog dimmer dial"], ["Power", "USB-C"]] },
+  { id: "count", life: "Count on a marble nightstand beside a bed, digits lit amber at 10:08", code: "J–02", name: "Count", fn: "Timekeeping", price: 280, img: "assets/count.webp",
+    line: "Big, glowing digits you can read from across the room.",
+    head: "Time you can read from across the room.",
+    body: "Count is a flip clock in a brushed aluminum capsule. The digits are printed cards on geared drums, edge-lit by amber acrylic, so the time reads at a glance day or night.",
+    alt: "Count flip clock reading 10:08 in a brushed aluminum capsule",
+    f: ["Big flip digits behind amber acrylic, readable from the couch.",
+        "Each minute turns over with a soft mechanical click you can see and hear.",
+        "Sets itself on first power-up. A switch on the back changes between 12 and 24 hour."],
+    detail: ["assets/d-digits.webp", "Flip digits reading 08", "J–02 · Flip digits"],
+    specs: [["Dimensions", "250 × 100 × 95 mm"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Mechanical flip digits, 12 or 24 hour"], ["Light", "Amber edge lighting"], ["Power", "USB-C"]] },
+  { id: "console", life: "Console on a walnut sideboard next to a lamp, books and a framed moon photograph", code: "J–03", name: "Console", fn: "Home control", price: 890, img: "assets/console.webp",
+    line: "Weather, time, music and home on one front-facing screen.",
+    head: "The whole house on one panel.",
+    body: "Console puts the day in front of you: the date and time on split-flap tiles, the weather, your schedule and the state of the house. Dials and switches handle the rest.",
+    alt: "Console home control unit with split-flap date and time, a status panel, dials and switches",
+    f: ["Date and time on split-flap tiles, with the weather, your day and the house just below.",
+        "Every system has its own light. When everything is as it should be, the panel says All systems nominal.",
+        "Power, Mode and Scroll dials, plus four switches for lights, climate, audio and scenes."],
+    detail: ["assets/d-dials.webp", "Scroll dial with amber ring", "J–03 · Scroll dial"],
+    specs: [["Dimensions", "380 × 190 × 70 mm"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Split-flap date and time, status panel"], ["Controls", "3 dials, 4 switches"], ["Connectivity", "Wi-Fi, Matter"]] },
+  { id: "signal", life: "Signal on a walnut dresser in late afternoon light, next to books and a lamp", code: "J–04", name: "Signal", fn: "Audio", price: 520, img: "assets/signal.webp",
+    line: "A speaker you tune by hand.",
+    head: "Find a station by hand.",
+    body: "Signal is a spherical speaker under an amber dome. Turn the dial to move through FM or switch to Bluetooth or a cable, then tilt the sphere on its yoke to point the sound at you.",
+    alt: "Signal spherical speaker with an amber dome, tuning band and steel mesh grille on a pivot yoke",
+    f: ["A sphere of amber acrylic and steel mesh that tilts on its yoke to face the room.",
+        "The tuning band glows at the station you're on. FM, Bluetooth and AUX are marked on the band.",
+        "One side dial tunes. The other sets the volume."],
+    detail: ["assets/d-grille.webp", "Perforated steel grille", "J–04 · Grille"],
+    specs: [["Dimensions", "154 × 152 mm"], ["Materials", "Amber acrylic, steel mesh, brushed aluminum"], ["Sources", "FM, Bluetooth, AUX"], ["Controls", "Tuning and volume dials"], ["Power", "USB-C"]] },
+  { id: "dock", life: "Dock on a wooden shelf charging a phone, earbuds and a watch, between books and a plant", code: "J–05", name: "Dock", fn: "Power", price: 240, img: "assets/dock.webp",
+    line: "Phone, watch and earbuds, charged in plain view.",
+    head: "Everything charged, in plain view.",
+    body: "Dock holds your phone, watch and earbuds in an amber-lit frame, with two USB-C ports up front for everything else.",
+    alt: "Dock charging station holding a phone, earbuds and a watch in an amber-lit frame",
+    f: ["Phone, watch and earbuds stand up in a lit frame where you can see them.",
+        "Each pad glows while it charges and dims when the device is full.",
+        "The dial sets the frame's light, all the way down to off at night."],
+    detail: ["assets/d-dock.webp", "Earbuds charging on a lit pad", "J–05 · Charging pad"],
+    specs: [["Dimensions", "300 × 150 × 170 mm"], ["Materials", "Brushed aluminum, amber acrylic"], ["Charging", "Phone, watch and earbuds, plus 2 × USB-C"], ["Control", "Light dial"], ["Power", "USB-C PD"]] }
+];
+const PILLARS = ["In plain sight", "Show your work", "Hands first"];
+const $ = id => document.getElementById(id);
+const arrow = '<svg class="arrow"><use href="#arr"/></svg>';
+
+$("cards").innerHTML = P.map(p => `
+  <a class="card" href="#${p.id}">
+    <div class="pic"><img src="${p.img}" alt="${p.alt}" loading="lazy"></div>
+    <span class="row mono"><span>${p.code}</span><span>$${p.price}</span></span>
+    <h3>${p.name.toUpperCase()}</h3>
+    <span class="mono fn">${p.fn}</span>
+    <p>${p.line}</p>
+    <span class="more mono">View ${p.name} ${arrow}</span>
+  </a>`).join("");
+
+let cartCount = 0;
+function renderProduct(p) {
+  const i = P.indexOf(p), prev = P[(i + P.length - 1) % P.length], next = P[(i + 1) % P.length];
+  $("pv-crumb").textContent = p.name;
+  $("pv-img").src = p.img; $("pv-img").alt = p.alt;
+  $("pv-code").textContent = p.code; $("pv-code2").textContent = p.code;
+  $("pv-fn").textContent = p.fn;
+  $("pv-name").textContent = p.name.toUpperCase();
+  $("pv-head").textContent = p.head;
+  $("pv-body").textContent = p.body;
+  $("pv-price").textContent = "$" + p.price;
+  $("pv-add").textContent = "Add to cart";
+  $("pv-features").innerHTML = p.f.map((t, k) => `<li><span class="mono n">0${k + 1}</span><h3>${PILLARS[k]}</h3><p>${t}</p></li>`).join("");
+  $("pv-life").src = "assets/l-" + p.id + ".webp"; $("pv-life").alt = p.life;
+  $("pv-life-cap").textContent = p.code + " " + p.name + " · At home";
+  $("pv-detail").src = p.detail[0]; $("pv-detail").alt = p.detail[1];
+  $("pv-detail-cap").textContent = p.detail[2];
+  $("pv-specs").innerHTML = p.specs.map(([k, v]) => `<div><dt class="mono">${k}</dt><dd>${v}</dd></div>`).join("");
+  $("pv-prev").href = "#" + prev.id; $("pv-prev").querySelector("strong").textContent = prev.code + " " + prev.name.toUpperCase();
+  $("pv-next").href = "#" + next.id; $("pv-next").querySelector("strong").textContent = next.code + " " + next.name.toUpperCase();
+  document.title = p.name + " · Jupiter Co.";
+}
+$("pv-add").addEventListener("click", e => {
+  cartCount++; $("cart").textContent = `CART (${cartCount})`;
+  e.currentTarget.textContent = "Added to cart";
+});
+
+function route() {
+  const h = location.hash.slice(1);
+  const p = P.find(x => x.id === h);
+  $("menu").classList.remove("open"); $("menu-btn").setAttribute("aria-expanded", "false");
+  if (p) {
+    $("view-home").hidden = true; $("view-product").hidden = false;
+    renderProduct(p); window.scrollTo(0, 0);
+  } else {
+    const wasProduct = !$("view-product").hidden;
+    $("view-home").hidden = false; $("view-product").hidden = true;
+    document.title = "Jupiter Co.";
+    const el = h && document.getElementById(h);
+    if (el) el.scrollIntoView({ behavior: wasProduct ? "auto" : "smooth" });
+    else if (wasProduct) window.scrollTo(0, 0);
+  }
+}
+window.addEventListener("hashchange", route);
+route();
+
+$("menu-btn").addEventListener("click", () => {
+  const open = $("menu").classList.toggle("open");
+  $("menu-btn").setAttribute("aria-expanded", String(open));
+});
+</script>
+</body>
+</html>
