@@ -354,11 +354,11 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
             <div class="body"><span class="mono"><span>Culture</span><span>Coming soon</span></span><h3>The Space Age Home, Revisited</h3></div>
           </article>
           <article class="article">
-            <img src="assets/d-dials.webp" alt="Console's knurled Scroll dial" loading="lazy">
+            <img src="assets/l-console-day.webp" alt="Console on a sunlit wooden shelf beside books and a trailing plant" loading="lazy">
             <div class="body"><span class="mono"><span>Design</span><span>Coming soon</span></span><h3>The Lost Language of Everyday Objects</h3></div>
           </article>
           <article class="article">
-            <img src="assets/o-glow.webp" alt="Flare's ring of light through amber acrylic" loading="lazy">
+            <img src="assets/o-view.webp" alt="Flare on a stone kitchen counter in morning light, beside a bowl of lemons" loading="lazy">
             <div class="body"><span class="mono"><span>Living</span><span>Coming soon</span></span><h3>A Case for Keeping Things in View</h3></div>
           </article>
         </div>
@@ -430,7 +430,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
 
 <script>
 const P = [
-  { id: "flare", life: "Flare glowing on a stone counter at sunset, with a window view of hills behind", code: "J–01", name: "Flare", fn: "Ambient light", price: 340, img: "assets/flare.webp",
+  { id: "flare", lifeSrc: "assets/l-flare-day.webp", life: "Flare on a sunlit walnut shelf beside a stack of books and a trailing plant", code: "J–01", name: "Flare", fn: "Ambient light", price: 340, img: "assets/flare.webp",
     line: "A ring of warm light with a dial you can feel.",
     head: "Warm light, dimmed by hand.",
     body: "Flare is a ring of warm light set inside a shell of amber acrylic. Turn the dial on its base for a low glow at night or full light for reading.",
@@ -450,7 +450,7 @@ const P = [
         "Sets itself on first power-up. A switch on the back changes between 12 and 24 hour."],
     detail: ["assets/d-digits.webp", "Flip digits reading 08", "J–02 · Flip digits"],
     specs: [["Dimensions", "250 × 100 × 95 mm"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Mechanical flip digits, 12 or 24 hour"], ["Light", "Amber edge lighting"], ["Power", "USB-C"]] },
-  { id: "console", life: "Console on a walnut sideboard next to a lamp, books and a framed moon photograph", code: "J–03", name: "Console", fn: "Home control", price: 890, img: "assets/console.webp",
+  { id: "console", lifeSrc: "assets/l-console-day.webp", life: "Console on a sunlit wooden shelf beside books and a trailing plant", code: "J–03", name: "Console", fn: "Home control", price: 890, img: "assets/console.webp",
     line: "Weather, time, music and home on one front-facing screen.",
     head: "The whole house on one panel.",
     body: "Console puts the day in front of you: the date and time on split-flap tiles, the weather, your schedule and the state of the house. Dials and switches handle the rest.",
@@ -508,7 +508,7 @@ function renderProduct(p) {
   $("pv-price").textContent = "$" + p.price;
   $("pv-add").textContent = "Add to cart";
   $("pv-features").innerHTML = p.f.map((t, k) => `<li><span class="mono n">0${k + 1}</span><h3>${PILLARS[k]}</h3><p>${t}</p></li>`).join("");
-  $("pv-life").src = "assets/l-" + p.id + ".webp"; $("pv-life").alt = p.life;
+  $("pv-life").src = p.lifeSrc || ("assets/l-" + p.id + ".webp"); $("pv-life").alt = p.life;
   $("pv-life-cap").textContent = p.code + " " + p.name + " · At home";
   $("pv-detail").src = p.detail[0]; $("pv-detail").alt = p.detail[1];
   $("pv-detail-cap").textContent = p.detail[2];
