@@ -207,7 +207,7 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .demo-text p { color: var(--grey-on-dark); font-size: 17px; max-width: 40ch; }
 .demo-stage { position: relative; aspect-ratio: 4/3; display: grid; place-items: center; }
 .demo-glow { position: absolute; inset: 0; background: radial-gradient(45% 45% at 50% 55%, rgba(252,223,164,.55), rgba(224,138,44,.22) 45%, rgba(224,138,44,0) 70%); opacity: var(--v, .6); transition: opacity .15s; }
-.demo-stage img { position: relative; width: 78%; filter: brightness(calc(.42 + .58 * var(--v, .6))) drop-shadow(0 40px 60px rgba(0,0,0,.55)); transition: filter .15s; }
+.demo-stage img { position: relative; width: auto; max-width: 78%; max-height: 92%; filter: brightness(calc(.42 + .58 * var(--v, .6))) drop-shadow(0 40px 60px rgba(0,0,0,.55)); transition: filter .15s; }
 .dial { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
 .dial-row { display: flex; justify-content: space-between; align-items: baseline; }
 .dial-row output { font-family: var(--f-mono); font-size: 28px; color: var(--filament); }
@@ -578,20 +578,22 @@ const P = [
     detail: ["assets/d-knob.webp", "Knurled steel dimmer dial", "J–01 · Dimmer"],
     specs: [["Dimensions", "Ø 200 × 110 mm"], ["Weight", "1.2 kg"], ["Materials", "Brushed aluminum, amber acrylic, steel"], ["Light", "Integrated LED ring, warm white 2700K"], ["Control", "Analog dimmer dial, 1–100%"], ["Power", "USB-C, 20W"]],
     gallery: [["assets/flare.webp", "cut", "Flare on its own"],
+              ["assets/flare-front.webp", "cut", "Flare from the front, showing the light ring, status pip and dial"],
+              ["assets/flare-top.webp", "cut", "Flare from above, a ring of light around the engraved aluminum cap"],
               ["assets/l-flare.webp", "photo", "Flare glowing on a stone counter at sunset"],
               ["assets/l-flare-day2.webp", "photo", "Flare on an oak shelf in morning light, beside a trailing plant and books"],
               ["assets/o-view.webp", "photo", "Flare on a kitchen counter beside a bowl of lemons"],
               ["assets/d-knob.webp", "photo", "Close-up of Flare's knurled dimmer dial"]],
-    demo: { head: "Turn it down. Turn it up.",
+    demo: { img: "assets/flare-top.webp", alt: "Flare from above, its light ring dimming with the dial", head: "Turn it down. Turn it up.",
             body: "One dial, no presets. Turn it a little for a low glow at night, or all the way for reading light. Flare stays where you leave it.",
             stops: [[8, "Night glow"], [45, "Evening"], [100, "Reading"]] },
-    anatomy: { head: "Six parts. Nothing hidden.", parts: [
-      [49.5, 15.4, "Aluminum cap", "Brushed by hand and engraved with the Jupiter Co. mark."],
-      [96.4, 44.1, "Amber acrylic shell", "One cast ring that warms the light and lets you see inside."],
-      [22.7, 50.7, "Light ring", "A diffused LED ring in warm white, with no visible points of light."],
-      [71.7, 86.6, "Status pip", "Glows amber when Flare has power."],
-      [83.0, 86.6, "Dimmer dial", "Knurled steel with real resistance, from 1% to full."],
-      [32.7, 89.4, "Base", "Brushed aluminum, weighted so Flare stays put."]] },
+    anatomy: { img: "assets/flare-front.webp", alt: "Flare from the front with numbered parts", head: "Six parts. Nothing hidden.", parts: [
+      [50, 8, "Aluminum cap", "Brushed by hand and engraved with the Jupiter Co. mark."],
+      [96, 32, "Amber acrylic shell", "One cast ring that warms the light and lets you see inside."],
+      [19, 47.6, "Light ring", "A diffused LED ring in warm white, with no visible points of light."],
+      [73.1, 84.2, "Status pip", "Glows amber when Flare has power."],
+      [85.5, 84.2, "Dimmer dial", "Knurled steel with real resistance, from 1% to full."],
+      [53.6, 78, "Base", "Brushed aluminum, weighted so Flare stays put."]] },
     box: ["Flare", "1.5 m braided USB-C cable", "20W USB-C power adapter", "Microfiber care cloth"],
     faq: { head: "Before you plug it in.", items: [
       ["Does Flare need an app?", "No. Plug it in and turn the dial. There's nothing to pair, update or sign into."],
@@ -673,7 +675,7 @@ function renderProduct(p) {
   $("pv-demo").hidden = !p.demo;
   if (p.demo) {
     $("demo-head").textContent = p.demo.head; $("demo-body").textContent = p.demo.body;
-    $("demo-img").src = p.img; $("demo-img").alt = p.alt;
+    $("demo-img").src = p.demo.img || p.img; $("demo-img").alt = p.demo.alt || p.alt;
     $("stops").innerHTML = p.demo.stops.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="false">${l}</button>`).join("");
     [...$("stops").children].forEach(b => b.addEventListener("click", () => setDial(+b.dataset.v)));
     setDial(60);
@@ -681,7 +683,7 @@ function renderProduct(p) {
 
   $("pv-anat").hidden = !p.anatomy;
   if (p.anatomy) {
-    $("anat-img").src = p.img; $("anat-img").alt = p.alt;
+    $("anat-img").src = p.anatomy.img || p.img; $("anat-img").alt = p.anatomy.alt || p.alt;
     $("anat-code").textContent = p.code; $("anat-head").textContent = p.anatomy.head;
     $("anat-fig").querySelectorAll(".pin").forEach(n => n.remove());
     p.anatomy.parts.forEach(([x, y, name], k) => {
