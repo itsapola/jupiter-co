@@ -190,7 +190,9 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 /* Product page: gallery */
 .gal-stage { aspect-ratio: 4/3; display: grid; place-items: center; border-radius: 2px; overflow: hidden; position: relative; }
 .gal-stage.cut img { position: absolute; inset: 5%; width: 90%; height: 90%; object-fit: contain; filter: drop-shadow(0 40px 60px rgba(0,0,0,.55)) drop-shadow(0 0 80px rgba(224,138,44,.18)); }
-.gal-stage.photo img { width: 100%; height: 100%; object-fit: cover; }
+.gal-stage.photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.gal-stage.fit img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.thumbs button.fit img { object-fit: cover; }
 .thumbs { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
 .thumbs button { width: 76px; height: 57px; border: 1px solid var(--line-dark); border-radius: 2px; overflow: hidden; opacity: .55; transition: opacity .2s, border-color .2s; background: #1d1e22; }
 .thumbs button:hover { opacity: .85; }
@@ -583,7 +585,7 @@ const P = [
               ["assets/l-flare.webp", "photo", "Flare glowing on a stone counter at sunset"],
               ["assets/l-flare-day2.webp", "photo", "Flare on an oak shelf in morning light, beside a trailing plant and books"],
               ["assets/o-view.webp", "photo", "Flare on a kitchen counter beside a bowl of lemons"],
-              ["assets/d-knob.webp", "photo", "Close-up of Flare's knurled dimmer dial"]],
+              ["assets/d-knob.webp", "fit", "Close-up of Flare's knurled dimmer dial"]],
     demo: { img: "assets/flare-top.webp", alt: "Flare from above, its light ring dimming with the dial", head: "Turn it down. Turn it up.",
             body: "One dial, no presets. Turn it a little for a low glow at night, or all the way for reading light. Flare stays where you leave it.",
             stops: [[8, "Night glow"], [45, "Evening"], [100, "Reading"]] },
