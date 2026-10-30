@@ -6,7 +6,7 @@
 <title>Jupiter Co.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&family=Michroma&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Michroma&display=swap" rel="stylesheet">
 <style>
 :root {
   /* Palette 04, sampled from the renders: 50 / 25 / 10 / 8 / 4 / 3 */
@@ -223,24 +223,26 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .stops button { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--line-dark); border-radius: 40px; padding: 8px 14px; color: var(--grey-on-dark); }
 .stops button:hover, .stops button[aria-pressed="true"] { border-color: var(--amber); color: var(--lunar); }
 
-/* Product page: clock demo */
-.clock { width: 88%; position: relative; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
-.clock-body { border-radius: 999px; padding: 5.5% 6.5% 8%; background: linear-gradient(180deg, #e7dccf 0%, #c3b4a3 38%, #9c8d7c 62%, #cdbfb0 100%); position: relative; }
-.clock-body::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, rgba(0,0,0,.03) 1px 3px); pointer-events: none; }
-.clock-win { position: relative; border-radius: 999px; padding: 5% 9%; display: flex; justify-content: center; align-items: center; gap: 1.6%;
-  background: radial-gradient(70% 120% at 50% 50%, #8a3a0a 0%, #4a1c04 60%, #2a1003 100%);
-  box-shadow: inset 0 0 0 3px #e08a2c, inset 0 0 24px 6px rgba(224,138,44,.75), 0 0 30px rgba(224,138,44,.35); }
-.card-d { width: 17%; aspect-ratio: .78; border-radius: 6px; background: linear-gradient(180deg, #2a2522 0%, #1a1715 50%, #141210 50.4%, #1d1a18 100%); color: #F2E4CA;
-  display: grid; place-items: center; font-family: var(--f-body); font-weight: 500; font-size: clamp(34px, 6.4vw, 92px); line-height: 1; position: relative; transform-origin: 50% 50%; font-variant-numeric: tabular-nums; }
-.card-d::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: rgba(0,0,0,.6); }
-.card-d.flip { animation: flip .32s ease-in-out; }
-@keyframes flip { 0% { transform: scaleY(1); } 50% { transform: scaleY(0); filter: brightness(.6); } 100% { transform: scaleY(1); } }
-.colon { display: flex; flex-direction: column; gap: 22%; height: 40%; justify-content: center; width: 3%; align-items: center; }
-.colon i { width: 100%; aspect-ratio: 1; border-radius: 50%; background: #FCDFA4; box-shadow: 0 0 10px #E08A2C; animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 50% { opacity: .35; } }
-.clock-brand { position: absolute; left: 0; right: 0; bottom: 2.6%; text-align: center; font-family: var(--f-mono); font-size: clamp(8px, .9vw, 12px); letter-spacing: .35em; color: #2c2620; }
-.clock-pip { position: absolute; right: 13%; bottom: 3%; width: 1.4%; aspect-ratio: 1; border-radius: 50%; background: #FCDFA4; box-shadow: 0 0 8px #E08A2C; }
-@media (prefers-reduced-motion: reduce) { .card-d.flip, .colon i { animation: none; } }
+/* Product page: clock demo (live digits laid over the real render) */
+.clock { width: 92%; position: relative; container-type: inline-size; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
+.demo-stage .clock > img { width: 100%; max-width: none; max-height: none; display: block; filter: none; }
+.slot { position: absolute; top: 28.3%; height: 37.2%; border-radius: 2px; overflow: hidden;
+  background: linear-gradient(180deg, #2f2a27 0%, #252120 49.6%, #141110 49.6%, #141110 50.6%, #221e1c 50.6%, #1b1816 100%); }
+.slot:nth-of-type(1) { left: 23.95%; width: 9.85%; }
+.slot:nth-of-type(2) { left: 34.6%; width: 10.6%; }
+.slot:nth-of-type(3) { left: 54.6%; width: 10.4%; }
+.slot:nth-of-type(4) { left: 65.8%; width: 10.1%; }
+.card-d { position: absolute; inset: 0; display: grid; place-items: center; color: #F3DEC6; font-family: var(--f-body); font-weight: 600;
+  font-size: 15.5cqw; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; transform-origin: 50% 50%;
+  background: inherit; text-shadow: 0 0 1px rgba(243,222,198,.4); }
+.card-d span { display: inline-block; transform: scaleX(.86); }
+.card-d::after { content: ""; position: absolute; left: 0; right: 0; top: 49.6%; height: 1%; min-height: 1px; background: #110e0d; }
+.card-d.flip { animation: flip .34s ease-in-out; }
+@keyframes flip { 0% { transform: scaleY(1); } 50% { transform: scaleY(0); filter: brightness(.55); } 100% { transform: scaleY(1); } }
+.dot { position: absolute; left: 49.9%; width: 3%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,236,190,.95) 0 35%, rgba(224,138,44,.5) 55%, rgba(224,138,44,0) 72%); animation: pulse 2s ease-in-out infinite; mix-blend-mode: screen; }
+@keyframes pulse { 50% { opacity: .2; } }
+@media (prefers-reduced-motion: reduce) { .card-d.flip, .dot { animation: none; } }
 
 /* Product page: anatomy */
 .anat-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: center; }
@@ -528,11 +530,10 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
       </div>
       <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt="">
         <div class="clock" id="clock" hidden role="img" aria-label="A working Count flip clock showing your local time">
-          <div class="clock-body"><div class="clock-win">
-            <div class="card-d" id="cd0"></div><div class="card-d" id="cd1"></div>
-            <div class="colon"><i></i><i></i></div>
-            <div class="card-d" id="cd2"></div><div class="card-d" id="cd3"></div>
-          </div><span class="clock-brand">JUPITER CO.</span><i class="clock-pip"></i></div>
+          <img src="assets/count-front.webp" alt="">
+          <div class="slot"><div class="card-d" id="cd0"></div></div><div class="slot"><div class="card-d" id="cd1"></div></div>
+          <div class="slot"><div class="card-d" id="cd2"></div></div><div class="slot"><div class="card-d" id="cd3"></div></div>
+          <i class="dot" style="top:43.6%"></i><i class="dot" style="top:54.9%"></i>
         </div>
       </div>
     </div>
@@ -801,9 +802,9 @@ function tickClock() {
   [...str].forEach((ch, i) => {
     const el = $("cd" + i);
     if (clockShown && clockShown[i] === ch) return;
-    if (!clockShown) { el.textContent = ch; return; }
+    if (!clockShown) { el.innerHTML = "<span>" + ch + "</span>"; return; }
     el.classList.remove("flip"); void el.offsetWidth; el.classList.add("flip");
-    setTimeout(() => { el.textContent = ch; }, 160);
+    setTimeout(() => { el.innerHTML = "<span>" + ch + "</span>"; }, 170);
   });
   clockShown = str;
   $("clock-out").textContent = str.slice(0, 2) + ":" + str.slice(2) + (fmt24 ? "" : (d.getHours() < 12 ? " AM" : " PM"));
