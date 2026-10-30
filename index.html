@@ -275,6 +275,25 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .src-dim.lit { opacity: 0; }
 .band-dim { position: absolute; inset: 0; pointer-events: none; }
 
+/* Product page: dock demo (charge states over the real render) */
+.dockd { width: 100%; position: relative; container-type: inline-size; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
+.demo-stage .dockd > img { width: 100%; max-width: none; max-height: none; display: block; filter: none; }
+.pad { position: absolute; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; transition: opacity .6s, background .6s; }
+.pad.charging { background: radial-gradient(closest-side, rgba(255,226,160,.95), rgba(245,160,60,.65) 45%, rgba(224,138,44,0)); mix-blend-mode: screen; animation: breathe 2.4s ease-in-out infinite; }
+.pad.full { background: radial-gradient(closest-side, rgba(20,10,4,.8), rgba(20,10,4,0)); mix-blend-mode: multiply; animation: none; }
+.pad.empty { opacity: 0; }
+@keyframes breathe { 50% { opacity: .35; } }
+.ph-batt { position: absolute; left: 28.6%; top: 22.6%; transform: translate(-50%, -50%) rotate(3deg); color: #F3DEC6; font-family: var(--f-body); font-size: 1.3cqw; letter-spacing: .02em; white-space: nowrap; opacity: .92; display: flex; align-items: center; gap: .4em; }
+.ph-batt i { display: inline-block; width: 1.9em; height: .9em; border: 1px solid currentColor; border-radius: .2em; position: relative; }
+.ph-batt i::after { content: ""; position: absolute; left: 1px; top: 1px; bottom: 1px; width: calc((100% - 2px) * var(--lvl, .4)); background: #F0A245; border-radius: .1em; }
+.devs { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+.dev { display: grid; grid-template-columns: 96px 1fr 52px; gap: 14px; align-items: center; }
+.dev .bar { height: 3px; background: rgba(237,232,225,.15); border-radius: 2px; overflow: hidden; }
+.dev .bar b { display: block; height: 100%; width: 0; background: var(--amber); transition: width .25s linear; }
+.dev .bar b.done { background: var(--filament); }
+.dev output { font-family: var(--f-mono); font-size: 14px; text-align: right; color: var(--lunar); }
+@media (prefers-reduced-motion: reduce) { .pad.charging { animation: none; } }
+
 /* Product page: anatomy */
 .anat-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: center; }
 .anat-fig { position: relative; }
@@ -561,6 +580,15 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
           <span class="mono" style="color:var(--grey-on-dark);margin-top:6px">Source</span>
           <div class="stops" id="srcs"><button type="button" data-src="fm" aria-pressed="true">FM</button><button type="button" data-src="bt" aria-pressed="false">Bluetooth</button><button type="button" data-src="aux" aria-pressed="false">AUX</button></div>
         </div>
+        <div class="dial" id="dock-ctl" hidden>
+          <div class="devs">
+            <div class="dev"><span class="mono">Phone</span><span class="bar"><b id="bar-phone"></b></span><output id="pct-phone"></output></div>
+            <div class="dev"><span class="mono">Earbuds</span><span class="bar"><b id="bar-buds"></b></span><output id="pct-buds"></output></div>
+            <div class="dev"><span class="mono">Watch</span><span class="bar"><b id="bar-watch"></b></span><output id="pct-watch"></output></div>
+          </div>
+          <div class="stops" style="margin-top:10px"><button type="button" id="dock-run">Run the night</button><button type="button" id="dock-reset">Back to bedtime</button></div>
+          <span class="mono" id="dock-clock" style="color:var(--grey-on-dark)">21:08 · Bedtime</span>
+        </div>
         <div class="dial" id="cons-ctl" hidden>
           <span class="mono" style="color:var(--grey-on-dark)">Mode</span><output id="cons-out" hidden>Home</output>
           <div class="stops" id="cons-modes"><button type="button" data-m="home" aria-pressed="true">Home</button><button type="button" data-m="away" aria-pressed="false">Away</button><button type="button" data-m="night" aria-pressed="false">Night</button></div>
@@ -573,6 +601,10 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
         </div>
       </div>
       <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt="">
+        <div class="dockd" id="dockd" hidden role="img" aria-label="Dock charging a phone, earbuds and a watch, with each pad's light showing its charge">
+          <img src="assets/dock.webp" alt=""><i class="pad empty" id="pad-phone" style="left:23.18%;top:68.27%;width:26%;aspect-ratio:2.4"></i><i class="pad empty" id="pad-buds" style="left:53.64%;top:68.66%;width:24%;aspect-ratio:2.4"></i><i class="pad empty" id="pad-watch" style="left:79.09%;top:72.17%;width:20%;aspect-ratio:2.4"></i>
+          <span class="ph-batt" id="ph-batt"><i></i><span id="ph-pct"></span></span>
+        </div>
         <div class="tuner" id="tuner" hidden role="img" aria-label="Signal with its tuning needle following the dial">
           <img src="assets/signal-front-tune.webp" alt="">
           <i class="needle" id="needle"></i><i class="src-dim" id="dim-fm" style="left:77.8%;top:44.9%"></i><i class="src-dim" id="dim-bt" style="left:77.8%;top:48.1%"></i><i class="src-dim" id="dim-aux" style="left:84.2%;top:48.1%"></i>
@@ -801,7 +833,28 @@ const P = [
         "Each pad glows while it charges and dims when the device is full.",
         "The dial sets the frame's light, all the way down to off at night."],
     detail: ["assets/d-dock.webp", "Earbuds charging on a lit pad", "J–05 · Charging pad"],
-    specs: [["Dimensions", "300 × 150 × 170 mm"], ["Materials", "Brushed aluminum, amber acrylic"], ["Charging", "Phone, watch and earbuds, plus 2 × USB-C"], ["Control", "Light dial"], ["Power", "USB-C PD"]] }
+    specs: [["Dimensions", "300 × 150 × 170 mm"], ["Weight", "1.8 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Charging", "Phone (Qi2, 15W), earbuds (5W), watch (5W), plus 2 × USB-C (30W each)"], ["Control", "Light dial, from full glow to off"], ["Power", "USB-C PD, 100W adapter"]],
+    gallery: [["assets/dock.webp", "cut", "Dock on its own"],
+              ["assets/l-dock.webp", "photo", "Dock on a wooden shelf charging a phone, earbuds and a watch"],
+              ["assets/d-dock.webp", "fit", "Close-up of earbuds on Dock's lit charging pad"]],
+    demo: { type: "dock", pillar: "In plain sight", head: "Watch it work overnight.",
+            body: "Everything stays where you can see it. Each pad glows while its device charges and dims once it's full, so a glance tells you what's ready. Run a night on Dock and watch it happen." },
+    anatomy: { head: "Eight parts. Nothing tucked away.", parts: [
+      [22, 66.5, "Phone stand", "A Qi2 charger that holds your phone upright, so you can still read it."],
+      [51, 31.5, "Lit frame", "Amber acrylic lit from inside. Its glow is the whole status display."],
+      [64, 69, "Earbuds pad", "A lit tray sized for any earbuds case. The outline glows while it charges."],
+      [82.3, 42.9, "Watch charger", "Built into the arch, so the watch hangs at eye level, face out."],
+      [55.9, 86.5, "USB-C ports", "Two ports up front, 30W each, for everything else."],
+      [33.2, 83.5, "Status pips", "One per port. Each glows while that port is in use."],
+      [73.8, 89.5, "Light dial", "Sets the frame's glow, all the way down to off at night."],
+      [88.6, 80, "Aluminum base", "Brushed and weighted, so the phone lifts off with one hand."]] },
+    box: ["Dock", "100W USB-C power adapter", "1.5 m braided USB-C cable", "Microfiber care cloth"],
+    faq: { head: "Before you plug it in.", items: [
+      ["Will my phone charge on it?", "Any Qi2 or MagSafe phone charges on the stand. Most other phones charge through a case or one of the USB-C ports."],
+      ["Does it work with my watch and earbuds?", "The earbuds pad charges any wireless case. The watch charger fits the most popular smartwatch, and other watches charge from a USB-C port."],
+      ["Is it too bright for a bedroom?", "Turn the dial down for a low glow, or all the way to off. The pads still dim when each device is full."],
+      ["Why so many lights?", "So you never have to pick something up to find out if it's ready."]] },
+    pairs: ["count", "flare"] }
 ];
 const PILLARS = ["In plain sight", "Show your work", "Hands first"];
 const $ = id => document.getElementById(id);
@@ -836,20 +889,22 @@ function renderProduct(p) {
   $("pv-demo").hidden = !p.demo;
   if (p.demo) {
     $("demo-head").textContent = p.demo.head; $("demo-body").textContent = p.demo.body;
-    const isClock = p.demo.type === "clock", isCons = p.demo.type === "console", isTune = p.demo.type === "tuner";
+    const isClock = p.demo.type === "clock", isCons = p.demo.type === "console", isTune = p.demo.type === "tuner", isDock = p.demo.type === "dock";
+    $("dock-ctl").hidden = !isDock; $("dockd").hidden = !isDock;
+    if (isDock) dockReset();
     $("tune-ctl").hidden = !isTune; $("tuner").hidden = !isTune;
     if (isTune) { setSrc("fm"); setFreq(96.5); }
     $("cons-ctl").hidden = !isCons; $("cons").hidden = !isCons;
     if (isCons) { consSet("home"); }
     $("demo-pillar").textContent = p.demo.pillar || "Hands first";
-    $("dial-ctl").hidden = isClock || isCons || isTune; $("clock-ctl").hidden = !isClock;
-    $("clock").hidden = !isClock; $("demo-img").hidden = isClock || isCons || isTune;
-    $("demo-stage").querySelector(".demo-glow").style.opacity = (isClock || isCons || isTune) ? ".45" : "";
+    $("dial-ctl").hidden = isClock || isCons || isTune || isDock; $("clock-ctl").hidden = !isClock;
+    $("clock").hidden = !isClock; $("demo-img").hidden = isClock || isCons || isTune || isDock;
+    $("demo-stage").querySelector(".demo-glow").style.opacity = (isClock || isCons || isTune || isDock) ? ".45" : "";
     if (isClock) { clockShown = ""; tickClock(); }
     $("demo-img").src = p.demo.img || p.img; $("demo-img").alt = p.demo.alt || p.alt;
     $("stops").innerHTML = (p.demo.stops || []).map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="false">${l}</button>`).join("");
     [...$("stops").children].forEach(b => b.addEventListener("click", () => setDial(+b.dataset.v)));
-    if (!isClock && !isCons && !isTune) setDial(60);
+    if (!isClock && !isCons && !isTune && !isDock) setDial(60);
   }
 
   $("pv-anat").hidden = !p.anatomy;
@@ -898,6 +953,36 @@ function renderProduct(p) {
   $("pv-next").href = "#" + next.id; $("pv-next").querySelector("strong").textContent = next.code + " " + next.name.toUpperCase();
   document.title = p.name + " · Jupiter Co.";
 }
+// Dock: three devices charging overnight, sped up
+const DEV0 = { phone: 23, buds: 41, watch: 62 }, RATE = { phone: 11, buds: 16, watch: 13 };
+let dev = { ...DEV0 }, dockTimer = null, dockMin = 0;
+function dockDraw() {
+  ["phone", "buds", "watch"].forEach(k => {
+    const v = Math.min(100, Math.round(dev[k]));
+    $("pct-" + k).textContent = v + "%";
+    const bar = $("bar-" + k); bar.style.width = v + "%"; bar.classList.toggle("done", v >= 100);
+    $("pad-" + k).className = "pad " + (v >= 100 ? "full" : "charging");
+  });
+  const pv = Math.min(100, Math.round(dev.phone));
+  $("ph-pct").textContent = pv + "%";
+  $("ph-batt").style.setProperty("--lvl", (pv / 100).toFixed(2));
+  const t = 21 * 60 + 8 + dockMin, h = Math.floor(t / 60) % 24, m = t % 60;
+  const allFull = ["phone", "buds", "watch"].every(k => dev[k] >= 100);
+  $("dock-clock").textContent = String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + (allFull ? " · Everything charged" : dockTimer ? " · Charging" : " · Bedtime");
+}
+function dockReset() { clearInterval(dockTimer); dockTimer = null; dev = { ...DEV0 }; dockMin = 0; dockDraw(); }
+function dockRun() {
+  if (dockTimer) return;
+  if (["phone", "buds", "watch"].every(k => dev[k] >= 100)) dockReset();
+  dockTimer = setInterval(() => {
+    dockMin += 3;
+    ["phone", "buds", "watch"].forEach(k => { dev[k] = Math.min(100, dev[k] + RATE[k] / 20); });
+    if (["phone", "buds", "watch"].every(k => dev[k] >= 100) || $("dockd").hidden) { clearInterval(dockTimer); dockTimer = null; }
+    dockDraw();
+  }, 60);
+}
+$("dock-run").addEventListener("click", dockRun);
+$("dock-reset").addEventListener("click", dockReset);
 // Tick centers on the front render (x, y, needle length in px of 1100 × 1008) for 88, 92 … 108
 const TICKS = [[216, 439, 134], [308, 439, 134], [402, 439, 134], [504, 439, 134], [621, 439, 134], [730, 439, 134]];
 const STATIONS = [[89.3, "Late jazz"], [94.7, "Morning news"], [101.1, "Classics"], [105.9, "New music"]];
