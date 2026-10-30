@@ -223,6 +223,25 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .stops button { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--line-dark); border-radius: 40px; padding: 8px 14px; color: var(--grey-on-dark); }
 .stops button:hover, .stops button[aria-pressed="true"] { border-color: var(--amber); color: var(--lunar); }
 
+/* Product page: clock demo */
+.clock { width: 88%; position: relative; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
+.clock-body { border-radius: 999px; padding: 5.5% 6.5% 8%; background: linear-gradient(180deg, #e7dccf 0%, #c3b4a3 38%, #9c8d7c 62%, #cdbfb0 100%); position: relative; }
+.clock-body::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, rgba(0,0,0,.03) 1px 3px); pointer-events: none; }
+.clock-win { position: relative; border-radius: 999px; padding: 5% 9%; display: flex; justify-content: center; align-items: center; gap: 1.6%;
+  background: radial-gradient(70% 120% at 50% 50%, #8a3a0a 0%, #4a1c04 60%, #2a1003 100%);
+  box-shadow: inset 0 0 0 3px #e08a2c, inset 0 0 24px 6px rgba(224,138,44,.75), 0 0 30px rgba(224,138,44,.35); }
+.card-d { width: 17%; aspect-ratio: .78; border-radius: 6px; background: linear-gradient(180deg, #2a2522 0%, #1a1715 50%, #141210 50.4%, #1d1a18 100%); color: #F2E4CA;
+  display: grid; place-items: center; font-family: var(--f-body); font-weight: 500; font-size: clamp(34px, 6.4vw, 92px); line-height: 1; position: relative; transform-origin: 50% 50%; font-variant-numeric: tabular-nums; }
+.card-d::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: rgba(0,0,0,.6); }
+.card-d.flip { animation: flip .32s ease-in-out; }
+@keyframes flip { 0% { transform: scaleY(1); } 50% { transform: scaleY(0); filter: brightness(.6); } 100% { transform: scaleY(1); } }
+.colon { display: flex; flex-direction: column; gap: 22%; height: 40%; justify-content: center; width: 3%; align-items: center; }
+.colon i { width: 100%; aspect-ratio: 1; border-radius: 50%; background: #FCDFA4; box-shadow: 0 0 10px #E08A2C; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+.clock-brand { position: absolute; left: 0; right: 0; bottom: 2.6%; text-align: center; font-family: var(--f-mono); font-size: clamp(8px, .9vw, 12px); letter-spacing: .35em; color: #2c2620; }
+.clock-pip { position: absolute; right: 13%; bottom: 3%; width: 1.4%; aspect-ratio: 1; border-radius: 50%; background: #FCDFA4; box-shadow: 0 0 8px #E08A2C; }
+@media (prefers-reduced-motion: reduce) { .card-d.flip, .colon i { animation: none; } }
+
 /* Product page: anatomy */
 .anat-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: center; }
 .anat-fig { position: relative; }
@@ -494,16 +513,28 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
   <section class="demo" id="pv-demo" hidden>
     <div class="wrap demo-grid">
       <div class="demo-text">
-        <div class="eyebrow"><b>Try it</b> / Hands first</div>
+        <div class="eyebrow"><b>Try it</b> / <span id="demo-pillar">Hands first</span></div>
         <h2 id="demo-head"></h2>
         <p id="demo-body"></p>
-        <div class="dial">
+        <div class="dial" id="dial-ctl">
           <div class="dial-row"><label class="mono" for="dial">Brightness</label><output id="dial-out" for="dial">60%</output></div>
           <input type="range" id="dial" min="1" max="100" value="60">
           <div class="stops" id="stops"></div>
         </div>
+        <div class="dial" id="clock-ctl" hidden>
+          <div class="dial-row"><span class="mono">Your local time</span><output id="clock-out"></output></div>
+          <div class="stops"><button type="button" id="fmt12" aria-pressed="true">12 hour</button><button type="button" id="fmt24" aria-pressed="false">24 hour</button><button type="button" id="turn">Turn a minute</button></div>
+        </div>
       </div>
-      <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt=""></div>
+      <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt="">
+        <div class="clock" id="clock" hidden role="img" aria-label="A working Count flip clock showing your local time">
+          <div class="clock-body"><div class="clock-win">
+            <div class="card-d" id="cd0"></div><div class="card-d" id="cd1"></div>
+            <div class="colon"><i></i><i></i></div>
+            <div class="card-d" id="cd2"></div><div class="card-d" id="cd3"></div>
+          </div><span class="clock-brand">JUPITER CO.</span><i class="clock-pip"></i></div>
+        </div>
+      </div>
     </div>
   </section>
   <section class="light" id="pv-anat" hidden>
@@ -612,7 +643,26 @@ const P = [
         "Each minute turns over with a soft mechanical click you can see and hear.",
         "Sets itself on first power-up. A switch on the back changes between 12 and 24 hour."],
     detail: ["assets/d-digits.webp", "Flip digits reading 08", "J–02 · Flip digits"],
-    specs: [["Dimensions", "250 × 100 × 95 mm"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Mechanical flip digits, 12 or 24 hour"], ["Light", "Amber edge lighting"], ["Power", "USB-C"]] },
+    specs: [["Dimensions", "250 × 100 × 95 mm"], ["Weight", "0.9 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Mechanical flip digits, 12 or 24 hour"], ["Light", "Amber edge lighting, dimmable"], ["Power", "USB-C, 10W"]],
+    gallery: [["assets/count.webp", "cut", "Count on its own"],
+              ["assets/l-count.webp", "photo", "Count on a marble nightstand beside a bed, lit amber"],
+              ["assets/d-digits.webp", "fit", "Close-up of Count's flip digits"]],
+    demo: { type: "clock", pillar: "Show your work", head: "Every minute, on the minute.",
+            body: "Each minute a card drops and the time turns over with a soft click. This one is running on your local time. Switch between 12 and 24 hour the way you would on the back of the clock." },
+    anatomy: { head: "Six parts. All in view.", parts: [
+      [82.3, 27.1, "Aluminum capsule", "One piece of brushed aluminum, rounded at both ends."],
+      [13.2, 47.0, "Amber acrylic window", "Lets you watch the drums turn and carries the edge light."],
+      [30.2, 47.0, "Flip drums", "Printed cards on geared drums. Each minute, one card drops."],
+      [45.5, 45.8, "Colon lights", "Two amber points that pulse once every second."],
+      [72.0, 89.8, "Status pip", "Glows amber when Count has power."],
+      [13.9, 75.7, "Feet", "Machined aluminum, lifting the capsule just off the surface."]] },
+    box: ["Count", "1.5 m braided USB-C cable", "10W USB-C power adapter", "Microfiber care cloth"],
+    faq: { head: "Before you set it.", items: [
+      ["Does Count need Wi-Fi?", "Only once. It sets its own time on first power-up, then keeps time by itself."],
+      ["Is it loud?", "Each minute makes a soft click, about as loud as turning a page. A switch on the back silences it for the bedroom."],
+      ["Can I dim the edge light?", "Yes. A small wheel on the back dims the amber light or turns it off."],
+      ["How do I clean it?", "Wipe the aluminum and acrylic with the included cloth. Skip glass cleaner on the acrylic."]] },
+    pairs: ["flare", "dock"] },
   { id: "console", lifeSrc: "assets/l-console-day.webp", life: "Console on a sunlit wooden shelf beside books and a trailing plant", code: "J–03", name: "Console", fn: "Home control", price: 890, img: "assets/console.webp",
     line: "Weather, time, music and home on one front-facing screen.",
     head: "The whole house on one panel.",
@@ -677,10 +727,16 @@ function renderProduct(p) {
   $("pv-demo").hidden = !p.demo;
   if (p.demo) {
     $("demo-head").textContent = p.demo.head; $("demo-body").textContent = p.demo.body;
+    const isClock = p.demo.type === "clock";
+    $("demo-pillar").textContent = p.demo.pillar || "Hands first";
+    $("dial-ctl").hidden = isClock; $("clock-ctl").hidden = !isClock;
+    $("clock").hidden = !isClock; $("demo-img").hidden = isClock;
+    $("demo-stage").querySelector(".demo-glow").style.opacity = isClock ? ".45" : "";
+    if (isClock) { clockShown = ""; tickClock(); }
     $("demo-img").src = p.demo.img || p.img; $("demo-img").alt = p.demo.alt || p.alt;
-    $("stops").innerHTML = p.demo.stops.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="false">${l}</button>`).join("");
+    $("stops").innerHTML = (p.demo.stops || []).map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="false">${l}</button>`).join("");
     [...$("stops").children].forEach(b => b.addEventListener("click", () => setDial(+b.dataset.v)));
-    setDial(60);
+    if (!isClock) setDial(60);
   }
 
   $("pv-anat").hidden = !p.anatomy;
@@ -729,6 +785,29 @@ function renderProduct(p) {
   $("pv-next").href = "#" + next.id; $("pv-next").querySelector("strong").textContent = next.code + " " + next.name.toUpperCase();
   document.title = p.name + " · Jupiter Co.";
 }
+let fmt24 = false, clockOffset = 0, clockShown = "";
+function tickClock() {
+  if ($("clock").hidden || $("view-product").hidden) return;
+  const d = new Date(Date.now() + clockOffset * 60000);
+  let h = d.getHours(); const m = d.getMinutes();
+  if (!fmt24) h = h % 12 || 12;
+  const str = String(h).padStart(2, "0") + String(m).padStart(2, "0");
+  if (str === clockShown) return;
+  [...str].forEach((ch, i) => {
+    const el = $("cd" + i);
+    if (clockShown && clockShown[i] === ch) return;
+    if (!clockShown) { el.textContent = ch; return; }
+    el.classList.remove("flip"); void el.offsetWidth; el.classList.add("flip");
+    setTimeout(() => { el.textContent = ch; }, 160);
+  });
+  clockShown = str;
+  $("clock-out").textContent = str.slice(0, 2) + ":" + str.slice(2) + (fmt24 ? "" : (d.getHours() < 12 ? " AM" : " PM"));
+}
+setInterval(tickClock, 1000);
+function setFmt(v) { fmt24 = v; $("fmt12").setAttribute("aria-pressed", String(!v)); $("fmt24").setAttribute("aria-pressed", String(v)); tickClock(); }
+$("fmt12").addEventListener("click", () => setFmt(false));
+$("fmt24").addEventListener("click", () => setFmt(true));
+$("turn").addEventListener("click", () => { clockOffset++; tickClock(); });
 function setDial(v) {
   $("dial").value = v;
   $("dial-out").textContent = v + "%";
