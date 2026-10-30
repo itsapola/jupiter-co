@@ -283,7 +283,7 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .pad.full { background: radial-gradient(closest-side, rgba(20,10,4,.8), rgba(20,10,4,0)); mix-blend-mode: multiply; animation: none; }
 .pad.empty { opacity: 0; }
 @keyframes breathe { 50% { opacity: .35; } }
-.ph-batt { position: absolute; left: 28.6%; top: 22.6%; transform: translate(-50%, -50%) rotate(3deg); color: #F3DEC6; font-family: var(--f-body); font-size: 1.3cqw; letter-spacing: .02em; white-space: nowrap; opacity: .92; display: flex; align-items: center; gap: .4em; }
+.ph-batt { position: absolute; left: 26.9%; top: 22.8%; transform: translate(-50%, -50%); color: #F3DEC6; font-family: var(--f-body); font-size: 1.5cqw; letter-spacing: .02em; white-space: nowrap; opacity: .92; display: flex; align-items: center; gap: .4em; }
 .ph-batt i { display: inline-block; width: 1.9em; height: .9em; border: 1px solid currentColor; border-radius: .2em; position: relative; }
 .ph-batt i::after { content: ""; position: absolute; left: 1px; top: 1px; bottom: 1px; width: calc((100% - 2px) * var(--lvl, .4)); background: #F0A245; border-radius: .1em; }
 .devs { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
@@ -602,7 +602,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
       </div>
       <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt="">
         <div class="dockd" id="dockd" hidden role="img" aria-label="Dock charging a phone, earbuds and a watch, with each pad's light showing its charge">
-          <img src="assets/dock.webp" alt=""><i class="pad empty" id="pad-phone" style="left:23.18%;top:68.27%;width:26%;aspect-ratio:2.4"></i><i class="pad empty" id="pad-buds" style="left:53.64%;top:68.66%;width:24%;aspect-ratio:2.4"></i><i class="pad empty" id="pad-watch" style="left:79.09%;top:72.17%;width:20%;aspect-ratio:2.4"></i>
+          <img src="assets/dock-front.webp" alt=""><i class="pad empty" id="pad-phone" style="left:26.82%;top:74.79%;width:30%;aspect-ratio:2.4"></i><i class="pad empty" id="pad-buds" style="left:55.91%;top:73.78%;width:27%;aspect-ratio:2.4"></i><i class="pad empty" id="pad-watch" style="left:80.0%;top:72.35%;width:23%;aspect-ratio:2.4"></i>
           <span class="ph-batt" id="ph-batt"><i></i><span id="ph-pct"></span></span>
         </div>
         <div class="tuner" id="tuner" hidden role="img" aria-label="Signal with its tuning needle following the dial">
@@ -824,7 +824,7 @@ const P = [
       ["How loud does it get?", "Loud enough to fill a living room. The tilting yoke lets you aim it so you don't need full volume."],
       ["How do I clean it?", "Wipe the dome and aluminum with the included cloth. A soft brush clears dust from the grille."]] },
     pairs: ["flare", "console"] },
-  { id: "dock", life: "Dock on a wooden shelf charging a phone, earbuds and a watch, between books and a plant", code: "J–05", name: "Dock", fn: "Power", price: 240, img: "assets/dock.webp",
+  { id: "dock", lifeSrc: "assets/l-dock-day.webp", life: "Dock on a sunlit nightstand beside a stone lamp, charging a phone, earbuds and a watch", life0: "Dock on a wooden shelf charging a phone, earbuds and a watch, between books and a plant", code: "J–05", name: "Dock", fn: "Power", price: 240, img: "assets/dock.webp",
     line: "Phone, watch and earbuds, charged in plain view.",
     head: "Everything charged, in plain view.",
     body: "Dock holds your phone, watch and earbuds in an amber-lit frame, with two USB-C ports up front for everything else.",
@@ -835,19 +835,22 @@ const P = [
     detail: ["assets/d-dock.webp", "Earbuds charging on a lit pad", "J–05 · Charging pad"],
     specs: [["Dimensions", "300 × 150 × 170 mm"], ["Weight", "1.8 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Charging", "Phone (Qi2, 15W), earbuds (5W), watch (5W), plus 2 × USB-C (30W each)"], ["Control", "Light dial, from full glow to off"], ["Power", "USB-C PD, 100W adapter"]],
     gallery: [["assets/dock.webp", "cut", "Dock on its own"],
+              ["assets/dock-front.webp", "cut", "Dock from the front, charging a phone, earbuds and a watch"],
+              ["assets/dock-right.webp", "cut", "Dock from the right, showing the lit frame and watch charger"],
+              ["assets/l-dock-empty.webp", "photo", "Dock empty on a marble dresser at night, its pads and frame lit"],
               ["assets/l-dock.webp", "photo", "Dock on a wooden shelf charging a phone, earbuds and a watch"],
               ["assets/d-dock.webp", "fit", "Close-up of earbuds on Dock's lit charging pad"]],
     demo: { type: "dock", pillar: "In plain sight", head: "Watch it work overnight.",
             body: "Everything stays where you can see it. Each pad glows while its device charges and dims once it's full, so a glance tells you what's ready. Run a night on Dock and watch it happen." },
-    anatomy: { head: "Eight parts. Nothing tucked away.", parts: [
-      [22, 66.5, "Phone stand", "A Qi2 charger that holds your phone upright, so you can still read it."],
-      [51, 31.5, "Lit frame", "Amber acrylic lit from inside. Its glow is the whole status display."],
-      [64, 69, "Earbuds pad", "A lit tray sized for any earbuds case. The outline glows while it charges."],
-      [82.3, 42.9, "Watch charger", "Built into the arch, so the watch hangs at eye level, face out."],
-      [55.9, 86.5, "USB-C ports", "Two ports up front, 30W each, for everything else."],
-      [33.2, 83.5, "Status pips", "One per port. Each glows while that port is in use."],
-      [73.8, 89.5, "Light dial", "Sets the frame's glow, all the way down to off at night."],
-      [88.6, 80, "Aluminum base", "Brushed and weighted, so the phone lifts off with one hand."]] },
+    anatomy: { img: "assets/dock-front.webp", alt: "Dock from the front with numbered parts", head: "Eight parts. Nothing tucked away.", parts: [
+      [26.8, 75.5, "Phone stand", "A Qi2 charger that holds your phone upright, so you can still read it."],
+      [56.4, 34.6, "Lit frame", "Amber acrylic lit from inside. Its glow is the whole status display."],
+      [68.6, 74.5, "Earbuds pad", "A lit tray sized for any earbuds case. The outline glows while it charges."],
+      [72, 43, "Watch charger", "Built into the arch, so the watch hangs at eye level, face out."],
+      [64.5, 89.8, "USB-C ports", "Two ports up front, 30W each, for everything else."],
+      [38.6, 85, "Status pips", "One per port. Each glows while that port is in use."],
+      [85.9, 90, "Light dial", "Sets the frame's glow, all the way down to off at night."],
+      [47.3, 96, "Aluminum base", "Brushed and weighted, so the phone lifts off with one hand."]] },
     box: ["Dock", "100W USB-C power adapter", "1.5 m braided USB-C cable", "Microfiber care cloth"],
     faq: { head: "Before you plug it in.", items: [
       ["Will my phone charge on it?", "Any Qi2 or MagSafe phone charges on the stand. Most other phones charge through a case or one of the USB-C ports."],
