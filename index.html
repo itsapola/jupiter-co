@@ -213,6 +213,7 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .dial { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
 .dial-row { display: flex; justify-content: space-between; align-items: baseline; }
 .dial-row output { font-family: var(--f-mono); font-size: 28px; color: var(--filament); }
+.dial input[type=range]:disabled { opacity: .35; cursor: default; }
 .dial input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; cursor: pointer; }
 .dial input[type=range]::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(90deg, var(--amber) var(--pct, 60%), rgba(237,232,225,.2) var(--pct, 60%)); }
 .dial input[type=range]::-moz-range-track { height: 2px; background: rgba(237,232,225,.2); }
@@ -262,6 +263,17 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .toggles button::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #3a2e26; }
 .toggles button[aria-pressed="true"] { color: var(--lunar); border-color: var(--amber); }
 .toggles button[aria-pressed="true"]::before { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+
+/* Product page: tuner demo (needle over the real render) */
+.tuner { width: 86%; position: relative; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
+.demo-stage .tuner > img { width: 100%; max-width: none; max-height: none; display: block; filter: none; }
+.needle { position: absolute; width: 1.05%; border-radius: 3px; transform: translate(-50%, -50%) rotate(var(--rot, 8deg)); z-index: 2;
+  background: linear-gradient(90deg, #ff9a1f 0%, #ffe3a0 45%, #fff3d0 55%, #ff9a1f 100%);
+  box-shadow: 0 0 4px 1px #ffb040, 0 0 14px 4px rgba(255,150,40,.85), 0 0 34px 10px rgba(224,120,30,.45); transition: left .12s linear, top .12s linear, height .12s linear, opacity .3s; }
+.needle.off { opacity: 0; }
+.src-dim { position: absolute; width: 5%; height: 3%; transform: translate(-50%, -50%); background: rgba(16,8,4,.72); border-radius: 3px; transition: opacity .25s; }
+.src-dim.lit { opacity: 0; }
+.band-dim { position: absolute; inset: 0; pointer-events: none; }
 
 /* Product page: anatomy */
 .anat-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: center; }
@@ -542,6 +554,13 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
           <input type="range" id="dial" min="1" max="100" value="60">
           <div class="stops" id="stops"></div>
         </div>
+        <div class="dial" id="tune-ctl" hidden>
+          <div class="dial-row"><label class="mono" for="freq">FM</label><output id="freq-out" for="freq">96.5</output></div>
+          <input type="range" id="freq" min="88" max="108" step="0.1" value="96.5">
+          <div class="dial-row" style="margin-top:-4px"><span class="mono" style="color:var(--grey-on-dark)" id="station">Static</span></div>
+          <span class="mono" style="color:var(--grey-on-dark);margin-top:6px">Source</span>
+          <div class="stops" id="srcs"><button type="button" data-src="fm" aria-pressed="true">FM</button><button type="button" data-src="bt" aria-pressed="false">Bluetooth</button><button type="button" data-src="aux" aria-pressed="false">AUX</button></div>
+        </div>
         <div class="dial" id="cons-ctl" hidden>
           <span class="mono" style="color:var(--grey-on-dark)">Mode</span><output id="cons-out" hidden>Home</output>
           <div class="stops" id="cons-modes"><button type="button" data-m="home" aria-pressed="true">Home</button><button type="button" data-m="away" aria-pressed="false">Away</button><button type="button" data-m="night" aria-pressed="false">Night</button></div>
@@ -554,6 +573,10 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
         </div>
       </div>
       <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt="">
+        <div class="tuner" id="tuner" hidden role="img" aria-label="Signal with its tuning needle following the dial">
+          <img src="assets/signal-tune.webp" alt="">
+          <i class="needle" id="needle"></i><i class="src-dim" id="dim-fm" style="left:71.82%;top:50.83%"></i><i class="src-dim" id="dim-bt" style="left:71.09%;top:53.97%"></i><i class="src-dim" id="dim-aux" style="left:76.91%;top:55.55%"></i>
+        </div>
         <div class="cons" id="cons" hidden role="group" aria-label="A working Console. Tap the switches or the Mode dial.">
           <img src="assets/console-front.webp" alt="Console from the front, with its switches and status lights">
           <i class="led keep" id="sw-lights" style="left:55.14%;top:73.63%"></i><i class="led keep" id="sw-climate" style="left:62.71%;top:73.63%"></i><i class="led keep" id="sw-audio" style="left:70.29%;top:73.63%"></i><i class="led keep" id="st-lights-a" style="left:68.86%;top:50.55%"></i><i class="led keep" id="st-lights-b" style="left:79.43%;top:50.55%"></i><i class="led keep" id="st-climate-a" style="left:68.86%;top:55.23%"></i><i class="led keep" id="st-climate-b" style="left:79.43%;top:55.23%"></i><i class="led keep" id="st-security-a" style="left:68.86%;top:60.06%"></i><i class="led keep" id="st-security-b" style="left:79.43%;top:60.22%"></i><i class="led keep" id="st-audio-a" style="left:68.86%;top:64.9%"></i><i class="led keep" id="st-audio-b" style="left:79.43%;top:64.9%"></i><i class="led keep" id="md-home" style="left:26.43%;top:74.88%"></i><i class="led keep" id="md-away" style="left:26.43%;top:79.41%"></i><i class="led keep" id="md-night" style="left:26.43%;top:84.09%"></i>
@@ -744,7 +767,28 @@ const P = [
         "The tuning band glows at the station you're on. FM, Bluetooth and AUX are marked on the band.",
         "One side dial tunes. The other sets the volume."],
     detail: ["assets/d-grille.webp", "Perforated steel grille", "J–04 · Grille"],
-    specs: [["Dimensions", "154 × 152 mm"], ["Materials", "Amber acrylic, steel mesh, brushed aluminum"], ["Sources", "FM, Bluetooth, AUX"], ["Controls", "Tuning and volume dials"], ["Power", "USB-C"]] },
+    specs: [["Dimensions", "Ø 154 × 152 mm"], ["Weight", "1.6 kg"], ["Materials", "Amber acrylic, steel mesh, brushed aluminum"], ["Speaker", "Full-range driver and passive radiator, 20W"], ["Sources", "FM, Bluetooth 5.3, AUX"], ["Controls", "Tuning dial, volume dial, tilting yoke"], ["Power", "USB-C, 30W"]],
+    gallery: [["assets/signal.webp", "cut", "Signal on its own"],
+              ["assets/l-signal.webp", "photo", "Signal on a walnut dresser in late afternoon light"],
+              ["assets/d-grille.webp", "fit", "Close-up of Signal's perforated steel grille"]],
+    demo: { type: "tuner", pillar: "Hands first", head: "Turn the dial. See what's there.",
+            body: "Drag the dial across the band and the needle follows, the way it does on Signal. Stop on a station and its name comes up. Switch to Bluetooth or AUX and the band goes dark." },
+    anatomy: { head: "Eight parts. Tuned by hand.", parts: [
+      [50.9, 18.5, "Amber acrylic dome", "Lets you see the driver and carries the glow of the band."],
+      [20.6, 38.6, "Tuning band", "FM from 88 to 108, with a needle that glows at the station you're on."],
+      [79.6, 51.6, "Source labels", "FM, Bluetooth and AUX. The one you're using lights up."],
+      [93.6, 58, "Tuning dial", "Knurled aluminum. Turn it to move the needle across the band."],
+      [4.5, 37, "Volume dial", "On the other side of the yoke, with the same feel."],
+      [40.9, 70, "Steel mesh grille", "Perforated steel over a full-range driver."],
+      [11.8, 66, "Pivot yoke", "Tilts the sphere so the sound points at you."],
+      [56.5, 94.1, "Base and status pip", "Weighted aluminum. The pip glows when Signal is on."]] },
+    box: ["Signal", "1.5 m braided USB-C cable", "30W USB-C power adapter", "1 m 3.5 mm AUX cable", "Microfiber care cloth"],
+    faq: { head: "Before you tune in.", items: [
+      ["Does Signal need an app?", "No. FM and AUX work out of the box. Bluetooth pairs once from your phone's settings."],
+      ["Why FM?", "Because finding a station by hand is half the fun. Bluetooth is there when you want your own music."],
+      ["How loud does it get?", "Loud enough to fill a living room. The tilting yoke lets you aim it so you don't need full volume."],
+      ["How do I clean it?", "Wipe the dome and aluminum with the included cloth. A soft brush clears dust from the grille."]] },
+    pairs: ["flare", "console"] },
   { id: "dock", life: "Dock on a wooden shelf charging a phone, earbuds and a watch, between books and a plant", code: "J–05", name: "Dock", fn: "Power", price: 240, img: "assets/dock.webp",
     line: "Phone, watch and earbuds, charged in plain view.",
     head: "Everything charged, in plain view.",
@@ -789,18 +833,20 @@ function renderProduct(p) {
   $("pv-demo").hidden = !p.demo;
   if (p.demo) {
     $("demo-head").textContent = p.demo.head; $("demo-body").textContent = p.demo.body;
-    const isClock = p.demo.type === "clock", isCons = p.demo.type === "console";
+    const isClock = p.demo.type === "clock", isCons = p.demo.type === "console", isTune = p.demo.type === "tuner";
+    $("tune-ctl").hidden = !isTune; $("tuner").hidden = !isTune;
+    if (isTune) { setSrc("fm"); setFreq(96.5); }
     $("cons-ctl").hidden = !isCons; $("cons").hidden = !isCons;
     if (isCons) { consSet("home"); }
     $("demo-pillar").textContent = p.demo.pillar || "Hands first";
-    $("dial-ctl").hidden = isClock || isCons; $("clock-ctl").hidden = !isClock;
-    $("clock").hidden = !isClock; $("demo-img").hidden = isClock || isCons;
-    $("demo-stage").querySelector(".demo-glow").style.opacity = (isClock || isCons) ? ".45" : "";
+    $("dial-ctl").hidden = isClock || isCons || isTune; $("clock-ctl").hidden = !isClock;
+    $("clock").hidden = !isClock; $("demo-img").hidden = isClock || isCons || isTune;
+    $("demo-stage").querySelector(".demo-glow").style.opacity = (isClock || isCons || isTune) ? ".45" : "";
     if (isClock) { clockShown = ""; tickClock(); }
     $("demo-img").src = p.demo.img || p.img; $("demo-img").alt = p.demo.alt || p.alt;
     $("stops").innerHTML = (p.demo.stops || []).map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="false">${l}</button>`).join("");
     [...$("stops").children].forEach(b => b.addEventListener("click", () => setDial(+b.dataset.v)));
-    if (!isClock && !isCons) setDial(60);
+    if (!isClock && !isCons && !isTune) setDial(60);
   }
 
   $("pv-anat").hidden = !p.anatomy;
@@ -849,6 +895,31 @@ function renderProduct(p) {
   $("pv-next").href = "#" + next.id; $("pv-next").querySelector("strong").textContent = next.code + " " + next.name.toUpperCase();
   document.title = p.name + " · Jupiter Co.";
 }
+// Tick centers on the render (x, y, length in px of 1100 × 1082) for 88, 92 … 108
+const TICKS = [[187, 425, 144], [254, 438, 149], [338, 452, 152], [435, 470, 155], [551, 492, 160], [662, 516, 160]];
+const STATIONS = [[89.3, "Late jazz"], [94.7, "Morning news"], [101.1, "Classics"], [105.9, "New music"]];
+let src = "fm";
+function setFreq(f) {
+  f = Math.round(f * 10) / 10; $("freq").value = f;
+  const t = (f - 88) / 4, i = Math.min(4, Math.floor(t)), k = t - i, A = TICKS[i], B = TICKS[i + 1];
+  const x = A[0] + (B[0] - A[0]) * k, y = A[1] + (B[1] - A[1]) * k, h = A[2] + (B[2] - A[2]) * k;
+  const n = $("needle"); n.style.left = (x / 11) + "%"; n.style.top = (y / 10.82) + "%"; n.style.height = (h / 10.82) + "%";
+  $("freq-out").textContent = f.toFixed(1);
+  const hit = STATIONS.find(([s]) => Math.abs(s - f) <= 0.2);
+  $("station").textContent = src !== "fm" ? (src === "bt" ? "Playing from your phone" : "Playing from a cable") : (hit ? hit[1] : "Static");
+  $("station").style.color = hit && src === "fm" ? "var(--filament)" : "var(--grey-on-dark)";
+  $("freq").style.setProperty("--pct", ((f - 88) / 20 * 100) + "%");
+}
+function setSrc(v) {
+  src = v;
+  ["fm", "bt", "aux"].forEach(k => $("dim-" + k).classList.toggle("lit", k === v));
+  $("needle").classList.toggle("off", v !== "fm");
+  $("freq").disabled = v !== "fm";
+  [...$("srcs").children].forEach(b => b.setAttribute("aria-pressed", String(b.dataset.src === v)));
+  setFreq(+$("freq").value);
+}
+$("freq").addEventListener("input", e => setFreq(+e.target.value));
+[...$("srcs").children].forEach(b => b.addEventListener("click", () => setSrc(b.dataset.src)));
 const MODES = {
   home:  { sw: { lights: true,  climate: true, audio: true  }, sec: false, text: ["Home", "All systems", "Nominal"] },
   away:  { sw: { lights: false, climate: true, audio: false }, sec: true,  text: ["Away", "Security", "Armed"] },
