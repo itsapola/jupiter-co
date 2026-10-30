@@ -37,7 +37,6 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; }
 h1, h2, h3 { font-weight: 300; letter-spacing: -0.02em; line-height: 1.04; text-wrap: balance; }
-h1, h2 { font-family: var(--f-display); font-weight: 400; letter-spacing: 0; line-height: 1.18; }
 [hidden] { display: none !important; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 .mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
@@ -78,7 +77,7 @@ header { position: absolute; inset: 0 0 auto 0; z-index: 10; }
   linear-gradient(180deg, rgba(20,21,24,.7) 0%, rgba(20,21,24,0) 22%, rgba(20,21,24,0) 75%, rgba(20,21,24,.6) 100%); }
 .hero-copy { max-width: 600px; }
 .hero-tag-wrap { position: absolute; right: var(--gutter); bottom: -72px; }
-.hero h1 { font-size: clamp(32px, 3.9vw, 60px); margin: 28px 0 26px; max-width: 15ch; }
+.hero h1 { font-size: clamp(44px, 5.6vw, 86px); margin: 28px 0 26px; max-width: 13ch; }
 .hero .sub { font-size: clamp(18px, 1.7vw, 23px); color: var(--grey-on-dark); max-width: 34ch; margin-bottom: 44px; font-weight: 300; }
 .hero-tag { display: flex; gap: 14px; align-items: center; color: var(--lunar); text-shadow: 0 1px 8px rgba(0,0,0,.6); }
 .hero-tag:hover { color: var(--amber); }
@@ -93,7 +92,7 @@ header { position: absolute; inset: 0 0 auto 0; z-index: 10; }
 .light { background: var(--lunar); color: var(--deep-space); }
 section { padding: 104px 0; }
 .sec-head { display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: end; margin-bottom: 56px; }
-h2.big { font-size: clamp(26px, 3vw, 44px); margin-top: 22px; }
+h2.big { font-size: clamp(36px, 4.4vw, 64px); margin-top: 22px; }
 .sec-head p { max-width: 40ch; font-size: 18px; color: var(--ink-soft); justify-self: end; }
 
 /* Collection */
@@ -129,7 +128,7 @@ h2.big { font-size: clamp(26px, 3vw, 44px); margin-top: 22px; }
 /* Details */
 .details-grid { display: grid; grid-template-columns: 4fr 4fr 4fr; gap: 20px; align-items: start; }
 .details-text { display: flex; flex-direction: column; gap: 24px; padding-right: 20px; }
-.details-text h2 { font-size: clamp(24px, 2.3vw, 34px); }
+.details-text h2 { font-size: clamp(32px, 3.4vw, 50px); }
 .details-text p { color: var(--ink-soft); font-size: 17px; }
 figure.shot { position: relative; overflow: hidden; border-radius: 2px; background: var(--deep-space); }
 figure.shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
@@ -166,7 +165,7 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .pv-info .meta { display: flex; gap: 18px; color: var(--grey-on-dark); }
 .pv-info .meta .fn { color: var(--amber); }
 .pv-name { font-family: var(--f-display); font-size: clamp(30px, 3.4vw, 46px); letter-spacing: .06em; font-weight: 400; margin: 18px 0 20px; }
-.pv-info h2 { font-size: clamp(20px, 1.7vw, 24px); margin-bottom: 18px; }
+.pv-info h2 { font-size: clamp(26px, 2.4vw, 34px); margin-bottom: 18px; }
 .pv-info p { color: var(--grey-on-dark); font-size: 17px; max-width: 44ch; }
 .buy { display: flex; align-items: center; gap: 24px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line-dark); flex-wrap: wrap; }
 .price { font-family: var(--f-mono); font-size: 20px; letter-spacing: .04em; }
@@ -212,7 +211,7 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .demo { background: radial-gradient(60% 80% at 70% 50%, rgba(224,138,44,.10), rgba(224,138,44,0) 60%), var(--deep-space); border-top: 1px solid var(--line-dark); }
 .demo-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 56px; align-items: center; }
 .demo-text { display: flex; flex-direction: column; gap: 22px; }
-.demo-text h2 { font-size: clamp(24px, 2.5vw, 36px); }
+.demo-text h2 { font-size: clamp(32px, 3.6vw, 52px); }
 .demo-text p { color: var(--grey-on-dark); font-size: 17px; max-width: 40ch; }
 .demo-stage { position: relative; aspect-ratio: 4/3; display: grid; place-items: center; }
 .demo-glow { position: absolute; inset: 0; background: radial-gradient(45% 45% at 50% 55%, rgba(252,223,164,.55), rgba(224,138,44,.22) 45%, rgba(224,138,44,0) 70%); opacity: var(--v, .6); transition: opacity .15s; }
@@ -319,7 +318,7 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .box-list li { padding: 10px 0; border-bottom: 1px solid var(--line-light); font-size: 16px; display: flex; gap: 14px; }
 .box-list li::before { content: "+"; color: var(--copper); font-family: var(--f-mono); }
 .faq { margin-top: 88px; display: grid; grid-template-columns: 4fr 8fr; gap: 56px; }
-.faq h2 { font-size: clamp(22px, 2.1vw, 30px); margin-top: 18px; }
+.faq h2 { font-size: clamp(30px, 3vw, 44px); margin-top: 18px; }
 .faq details { border-top: 1px solid var(--line-light); padding: 20px 0; }
 .faq details:last-child { border-bottom: 1px solid var(--line-light); }
 .faq summary { cursor: pointer; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 20px; }
@@ -646,7 +645,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
       <div class="anat-fig" id="anat-fig"><img id="anat-img" src="" alt=""></div>
       <div>
         <div class="eyebrow"><b id="anat-code"></b> / Anatomy</div>
-        <h2 class="big" id="anat-head" style="font-size:clamp(22px,2.1vw,30px)"></h2>
+        <h2 class="big" id="anat-head" style="font-size:clamp(30px,3vw,44px)"></h2>
         <ol class="parts" id="parts"></ol>
       </div>
     </div>
