@@ -247,16 +247,16 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 /* Product page: console demo (live lights over the real render) */
 .cons { width: 100%; position: relative; container-type: inline-size; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
 .demo-stage .cons > img { width: 100%; max-width: none; max-height: none; display: block; filter: none; }
-.led { position: absolute; width: 1.15%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; transition: background .25s, box-shadow .25s; }
+.led { position: absolute; width: .95%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; transition: background .25s, box-shadow .25s; }
 .led.off { background: radial-gradient(circle at 40% 35%, #3a2e26, #120d0a 70%); box-shadow: inset 0 0 0 1px rgba(0,0,0,.6); }
 .led.on { background: radial-gradient(circle, #fff1cf 0 30%, #f0a245 60%, #c66a12 100%); box-shadow: 0 0 6px 2px rgba(240,162,69,.7); }
 .led.keep { background: transparent; box-shadow: none; }
 .hit { position: absolute; transform: translate(-50%, -50%); border-radius: 6px; cursor: pointer; background: transparent; transition: box-shadow .2s; }
 .hit:hover, .hit:focus-visible { box-shadow: 0 0 0 2px rgba(224,138,44,.8); outline: none; }
 .hit:active { box-shadow: 0 0 0 2px var(--filament), inset 0 4px 8px rgba(0,0,0,.4); }
-.cons-status { position: absolute; left: 49.4%; top: 57.6%; width: 12.6%; height: 8.6%; background: #0a0603; color: #F3DEC6;
-  font-family: var(--f-body); font-weight: 500; font-size: 1.02cqw; line-height: 1.38; letter-spacing: .06em; text-transform: uppercase; display: flex; flex-direction: column; justify-content: center; }
-.cons-status b { font-weight: 500; font-size: 1.12cqw; }
+.cons-status { position: absolute; left: 54.9%; top: 57.6%; width: 8.4%; height: 10%; background: #0b0705; color: #E6D3BC;
+  font-family: var(--f-body); font-weight: 500; font-size: 1cqw; line-height: 1.36; letter-spacing: .05em; text-transform: uppercase; display: flex; flex-direction: column; justify-content: center; }
+.cons-status b { font-weight: 500; font-size: 1cqw; }
 .toggles { display: flex; gap: 10px; flex-wrap: wrap; }
 .toggles button { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--line-dark); border-radius: 40px; padding: 8px 14px; color: var(--grey-on-dark); display: inline-flex; align-items: center; gap: 8px; }
 .toggles button::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #3a2e26; }
@@ -555,10 +555,10 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
       </div>
       <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt="">
         <div class="cons" id="cons" hidden role="group" aria-label="A working Console. Tap the switches or the Mode dial.">
-          <img src="assets/console.webp" alt="Console from the front, with its switches and status lights">
-          <i class="led keep" id="sw-lights" style="left:49.36%;top:73.82%"></i><i class="led keep" id="sw-climate" style="left:56.36%;top:73.82%"></i><i class="led keep" id="sw-audio" style="left:63.55%;top:73.82%"></i><i class="led keep" id="st-lights-a" style="left:62.82%;top:50.41%"></i><i class="led keep" id="st-lights-b" style="left:73.18%;top:50.08%"></i><i class="led keep" id="st-climate-a" style="left:62.91%;top:54.8%"></i><i class="led keep" id="st-climate-b" style="left:73.27%;top:54.63%"></i><i class="led keep" id="st-security-a" style="left:62.82%;top:59.19%"></i><i class="led keep" id="st-security-b" style="left:73.18%;top:59.02%"></i><i class="led keep" id="st-audio-a" style="left:62.82%;top:63.58%"></i><i class="led keep" id="st-audio-b" style="left:73.18%;top:63.41%"></i><i class="led keep" id="md-home" style="left:22.55%;top:75.77%"></i><i class="led keep" id="md-away" style="left:22.45%;top:79.35%"></i><i class="led keep" id="md-night" style="left:22.45%;top:82.93%"></i>
+          <img src="assets/console-front.webp" alt="Console from the front, with its switches and status lights">
+          <i class="led keep" id="sw-lights" style="left:55.14%;top:73.52%"></i><i class="led keep" id="sw-climate" style="left:62.86%;top:73.68%"></i><i class="led keep" id="sw-audio" style="left:70.5%;top:73.52%"></i><i class="led keep" id="st-lights-a" style="left:69.0%;top:50.47%"></i><i class="led keep" id="st-lights-b" style="left:79.71%;top:50.47%"></i><i class="led keep" id="st-climate-a" style="left:69.0%;top:55.14%"></i><i class="led keep" id="st-climate-b" style="left:79.71%;top:55.14%"></i><i class="led keep" id="st-security-a" style="left:69.0%;top:59.97%"></i><i class="led keep" id="st-security-b" style="left:79.71%;top:59.97%"></i><i class="led keep" id="st-audio-a" style="left:69.0%;top:64.8%"></i><i class="led keep" id="st-audio-b" style="left:79.71%;top:64.8%"></i><i class="led keep" id="md-home" style="left:26.14%;top:75.08%"></i><i class="led keep" id="md-away" style="left:26.21%;top:79.44%"></i><i class="led keep" id="md-night" style="left:26.21%;top:83.96%"></i>
           <div class="cons-status" id="cons-status" aria-live="polite"><b>Home</b><span>All systems</span><span>Nominal</span></div>
-          <button type="button" class="hit" data-hit="lights" aria-label="Lights switch" style="left:49.09%;top:80.49%;width:4.2%;height:12%"></button><button type="button" class="hit" data-hit="climate" aria-label="Climate switch" style="left:56.09%;top:80.49%;width:4.2%;height:12%"></button><button type="button" class="hit" data-hit="audio" aria-label="Audio switch" style="left:63.27%;top:80.49%;width:4.2%;height:12%"></button><button type="button" class="hit" data-hit="scenes" aria-label="Scenes switch: next mode" style="left:70.64%;top:80.49%;width:4.2%;height:12%"></button><button type="button" class="hit" data-hit="mode" aria-label="Mode dial: next mode" style="left:17.09%;top:79.35%;width:6.4%;height:11%;border-radius:50%"></button>
+          <button type="button" class="hit" data-hit="lights" aria-label="Lights switch" style="left:55.14%;top:81.15%;width:4.2%;height:12.5%"></button><button type="button" class="hit" data-hit="climate" aria-label="Climate switch" style="left:62.86%;top:81.15%;width:4.2%;height:12.5%"></button><button type="button" class="hit" data-hit="audio" aria-label="Audio switch" style="left:70.5%;top:81.15%;width:4.2%;height:12.5%"></button><button type="button" class="hit" data-hit="scenes" aria-label="Scenes switch: next mode" style="left:78.14%;top:81.15%;width:4.2%;height:12.5%"></button><button type="button" class="hit" data-hit="mode" aria-label="Mode dial: next mode" style="left:20.64%;top:80.22%;width:6.6%;height:14.4%;border-radius:50%"></button>
         </div>
         <div class="clock" id="clock" hidden role="img" aria-label="A working Count flip clock showing your local time">
           <img src="assets/count-front.webp" alt="">
@@ -703,35 +703,37 @@ const P = [
   { id: "console", lifeSrc: "assets/l-console-day.webp", life: "Console on a sunlit wooden shelf beside books and a trailing plant", code: "J–03", name: "Console", fn: "Home control", price: 890, img: "assets/console.webp",
     line: "Weather, time, music and home on one front-facing screen.",
     head: "The whole house on one panel.",
-    body: "Console puts the day in front of you: the date and time on split-flap tiles, the weather, your schedule and the state of the house. Dials and switches handle the rest.",
+    body: "Console puts the day in front of you: the date and time on split-flap tiles, the weather, your schedule and the state of the house. Dials and switches handle the rest. Set it on a sideboard, or twist off the feet and hang it on the wall.",
     alt: "Console home control unit with split-flap date and time, a status panel, dials and switches",
     f: ["Date and time on split-flap tiles, with the weather, your day and the house just below.",
         "Every system has its own light. When everything is as it should be, the panel says All systems nominal.",
         "Power, Mode and Scroll dials, plus four switches for lights, climate, audio and scenes."],
     detail: ["assets/d-dials.webp", "Scroll dial with amber ring", "J–03 · Scroll dial"],
-    specs: [["Dimensions", "380 × 190 × 110 mm"], ["Weight", "2.4 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Split-flap date and time, backlit status panel"], ["Controls", "Power, Mode and Scroll dials, 4 switches"], ["Speaker", "Built-in, for alerts and voice"], ["Connectivity", "Wi-Fi, Matter, Thread"], ["Power", "USB-C, 30W"]],
+    specs: [["Dimensions", "380 × 190 × 110 mm"], ["Weight", "2.4 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Split-flap date and time, backlit status panel"], ["Controls", "Power, Mode and Scroll dials, 4 switches"], ["Mounting", "Removable feet for the tabletop, wall bracket included"], ["Speaker", "Built-in, for alerts and voice"], ["Connectivity", "Wi-Fi, Matter, Thread"], ["Power", "USB-C, 30W"]],
     gallery: [["assets/console.webp", "cut", "Console on its own"],
+              ["assets/console-front.webp", "cut", "Console from the front"],
+              ["assets/console-left.webp", "cut", "Console from the left, showing its amber acrylic side"],
               ["assets/l-console-day.webp", "photo", "Console on a sunlit wooden shelf"],
               ["assets/l-console.webp", "photo", "Console on a walnut sideboard at night, lit amber"],
               ["assets/d-dials.webp", "fit", "Close-up of Console's Scroll dial"]],
     demo: { type: "console", pillar: "Show your work", head: "Flip a switch. Watch it answer.",
             body: "Every system on Console has a switch and a light. Flip one and its light answers, on the switch and on the status panel. Turn the Mode dial to set the whole house for Home, Away or Night. Try it on the panel itself." },
-    anatomy: { head: "Nine parts. Every one labeled.", parts: [
-      [42.2, 29, "Split-flap display", "Day, date and time on flap tiles you can read from across the room."],
-      [21, 57, "Status panel", "Weather, today's schedule and the state of the house, backlit behind glass."],
-      [73.2, 54.6, "Status lights", "One light per system. When every light is on, the panel reads All systems nominal."],
-      [6, 79.3, "Power dial", "Turns Console on and off. The amber pip beside it shows it's running."],
-      [17.1, 79.3, "Mode dial", "Sets the house for Home, Away or Night in one turn."],
-      [36, 79.7, "Scroll dial", "Moves through the schedule and settings. Its amber ring lights while you turn it."],
-      [59.8, 80.5, "Switches", "Lights, Climate, Audio and Scenes. Each has its own light above it."],
-      [82.3, 80.5, "Speaker", "For alerts, timers and voice, behind a perforated grille."],
-      [95.2, 40, "Amber acrylic side", "Glows with the panel, so you can see Console is on from any angle."]] },
+    anatomy: { img: "assets/console-front.webp", alt: "Console from the front with numbered parts", head: "Nine parts. Every one labeled.", parts: [
+      [49.8, 23.8, "Split-flap display", "Day, date and time on flap tiles you can read from across the room."],
+      [25.2, 56.7, "Status panel", "Weather, today's schedule and the state of the house, backlit behind glass."],
+      [76.4, 72.5, "Status lights", "One light per system. When every light is on, the panel reads All systems nominal."],
+      [8.1, 80.2, "Power dial", "Turns Console on and off. The amber pip beside it shows it's running."],
+      [20.6, 80.2, "Mode dial", "Sets the house for Home, Away or Night in one turn."],
+      [42, 80.2, "Scroll dial", "Moves through the schedule and settings. Its amber ring lights while you turn it."],
+      [62.9, 81.2, "Switches", "Lights, Climate, Audio and Scenes. Each has its own light above it."],
+      [89.5, 81.5, "Speaker", "For alerts, timers and voice, behind a perforated grille."],
+      [10.3, 96.5, "Removable feet", "Twist them off by hand to hang Console on the wall with the included bracket."]] },
     box: ["Console", "1.5 m braided USB-C cable", "30W USB-C power adapter", "Wall mount bracket", "Microfiber care cloth"],
     faq: { head: "Before you set it up.", items: [
       ["What does Console work with?", "Anything that speaks Matter: lights, thermostats, locks and speakers from most major brands."],
       ["Do I still need my phone?", "Only once, to connect your devices. After that, everything runs from the dials and switches."],
       ["What do the switches control?", "Lights, Climate and Audio switch those systems on and off across the house. Scenes moves to the next mode."],
-      ["Can it go on a wall?", "Yes. A wall bracket comes in the box, and the panel reads just as well hung at eye level."]] },
+      ["Can it go on a wall?", "Yes. Twist off the feet by hand, then hang Console on the bracket that comes in the box. The panel reads just as well at eye level."]] },
     pairs: ["count", "signal"] },
   { id: "signal", life: "Signal on a walnut dresser in late afternoon light, next to books and a lamp", code: "J–04", name: "Signal", fn: "Audio", price: 520, img: "assets/signal.webp",
     line: "A speaker you tune by hand.",
