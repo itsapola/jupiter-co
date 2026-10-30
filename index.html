@@ -244,6 +244,25 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 @keyframes pulse { 50% { opacity: .2; } }
 @media (prefers-reduced-motion: reduce) { .card-d.flip, .dot { animation: none; } }
 
+/* Product page: console demo (live lights over the real render) */
+.cons { width: 100%; position: relative; container-type: inline-size; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
+.demo-stage .cons > img { width: 100%; max-width: none; max-height: none; display: block; filter: none; }
+.led { position: absolute; width: 1.15%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; transition: background .25s, box-shadow .25s; }
+.led.off { background: radial-gradient(circle at 40% 35%, #3a2e26, #120d0a 70%); box-shadow: inset 0 0 0 1px rgba(0,0,0,.6); }
+.led.on { background: radial-gradient(circle, #fff1cf 0 30%, #f0a245 60%, #c66a12 100%); box-shadow: 0 0 6px 2px rgba(240,162,69,.7); }
+.led.keep { background: transparent; box-shadow: none; }
+.hit { position: absolute; transform: translate(-50%, -50%); border-radius: 6px; cursor: pointer; background: transparent; transition: box-shadow .2s; }
+.hit:hover, .hit:focus-visible { box-shadow: 0 0 0 2px rgba(224,138,44,.8); outline: none; }
+.hit:active { box-shadow: 0 0 0 2px var(--filament), inset 0 4px 8px rgba(0,0,0,.4); }
+.cons-status { position: absolute; left: 49.4%; top: 57.6%; width: 12.6%; height: 8.6%; background: #0a0603; color: #F3DEC6;
+  font-family: var(--f-body); font-weight: 500; font-size: 1.02cqw; line-height: 1.38; letter-spacing: .06em; text-transform: uppercase; display: flex; flex-direction: column; justify-content: center; }
+.cons-status b { font-weight: 500; font-size: 1.12cqw; }
+.toggles { display: flex; gap: 10px; flex-wrap: wrap; }
+.toggles button { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--line-dark); border-radius: 40px; padding: 8px 14px; color: var(--grey-on-dark); display: inline-flex; align-items: center; gap: 8px; }
+.toggles button::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #3a2e26; }
+.toggles button[aria-pressed="true"] { color: var(--lunar); border-color: var(--amber); }
+.toggles button[aria-pressed="true"]::before { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+
 /* Product page: anatomy */
 .anat-grid { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; align-items: center; }
 .anat-fig { position: relative; }
@@ -523,12 +542,24 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
           <input type="range" id="dial" min="1" max="100" value="60">
           <div class="stops" id="stops"></div>
         </div>
+        <div class="dial" id="cons-ctl" hidden>
+          <span class="mono" style="color:var(--grey-on-dark)">Mode</span><output id="cons-out" hidden>Home</output>
+          <div class="stops" id="cons-modes"><button type="button" data-m="home" aria-pressed="true">Home</button><button type="button" data-m="away" aria-pressed="false">Away</button><button type="button" data-m="night" aria-pressed="false">Night</button></div>
+          <span class="mono" style="color:var(--grey-on-dark);margin-top:6px">Switches</span>
+          <div class="toggles" id="cons-sw"><button type="button" data-s="lights" aria-pressed="true">Lights</button><button type="button" data-s="climate" aria-pressed="true">Climate</button><button type="button" data-s="audio" aria-pressed="true">Audio</button></div>
+        </div>
         <div class="dial" id="clock-ctl" hidden>
           <div class="dial-row"><span class="mono">Your local time</span><output id="clock-out"></output></div>
           <div class="stops"><button type="button" id="fmt12" aria-pressed="true">12 hour</button><button type="button" id="fmt24" aria-pressed="false">24 hour</button><button type="button" id="turn">Turn a minute</button></div>
         </div>
       </div>
       <div class="demo-stage" id="demo-stage"><div class="demo-glow"></div><img id="demo-img" src="" alt="">
+        <div class="cons" id="cons" hidden role="group" aria-label="A working Console. Tap the switches or the Mode dial.">
+          <img src="assets/console.webp" alt="Console from the front, with its switches and status lights">
+          <i class="led keep" id="sw-lights" style="left:49.36%;top:73.82%"></i><i class="led keep" id="sw-climate" style="left:56.36%;top:73.82%"></i><i class="led keep" id="sw-audio" style="left:63.55%;top:73.82%"></i><i class="led keep" id="st-lights-a" style="left:62.82%;top:50.41%"></i><i class="led keep" id="st-lights-b" style="left:73.18%;top:50.08%"></i><i class="led keep" id="st-climate-a" style="left:62.91%;top:54.8%"></i><i class="led keep" id="st-climate-b" style="left:73.27%;top:54.63%"></i><i class="led keep" id="st-security-a" style="left:62.82%;top:59.19%"></i><i class="led keep" id="st-security-b" style="left:73.18%;top:59.02%"></i><i class="led keep" id="st-audio-a" style="left:62.82%;top:63.58%"></i><i class="led keep" id="st-audio-b" style="left:73.18%;top:63.41%"></i><i class="led keep" id="md-home" style="left:22.55%;top:75.77%"></i><i class="led keep" id="md-away" style="left:22.45%;top:79.35%"></i><i class="led keep" id="md-night" style="left:22.45%;top:82.93%"></i>
+          <div class="cons-status" id="cons-status" aria-live="polite"><b>Home</b><span>All systems</span><span>Nominal</span></div>
+          <button type="button" class="hit" data-hit="lights" aria-label="Lights switch" style="left:49.09%;top:80.49%;width:4.2%;height:12%"></button><button type="button" class="hit" data-hit="climate" aria-label="Climate switch" style="left:56.09%;top:80.49%;width:4.2%;height:12%"></button><button type="button" class="hit" data-hit="audio" aria-label="Audio switch" style="left:63.27%;top:80.49%;width:4.2%;height:12%"></button><button type="button" class="hit" data-hit="scenes" aria-label="Scenes switch: next mode" style="left:70.64%;top:80.49%;width:4.2%;height:12%"></button><button type="button" class="hit" data-hit="mode" aria-label="Mode dial: next mode" style="left:17.09%;top:79.35%;width:6.4%;height:11%;border-radius:50%"></button>
+        </div>
         <div class="clock" id="clock" hidden role="img" aria-label="A working Count flip clock showing your local time">
           <img src="assets/count-front.webp" alt="">
           <div class="slot"><div class="card-d" id="cd0"></div></div><div class="slot"><div class="card-d" id="cd1"></div></div>
@@ -678,7 +709,30 @@ const P = [
         "Every system has its own light. When everything is as it should be, the panel says All systems nominal.",
         "Power, Mode and Scroll dials, plus four switches for lights, climate, audio and scenes."],
     detail: ["assets/d-dials.webp", "Scroll dial with amber ring", "J–03 · Scroll dial"],
-    specs: [["Dimensions", "380 × 190 × 70 mm"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Split-flap date and time, status panel"], ["Controls", "3 dials, 4 switches"], ["Connectivity", "Wi-Fi, Matter"]] },
+    specs: [["Dimensions", "380 × 190 × 110 mm"], ["Weight", "2.4 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Split-flap date and time, backlit status panel"], ["Controls", "Power, Mode and Scroll dials, 4 switches"], ["Speaker", "Built-in, for alerts and voice"], ["Connectivity", "Wi-Fi, Matter, Thread"], ["Power", "USB-C, 30W"]],
+    gallery: [["assets/console.webp", "cut", "Console on its own"],
+              ["assets/l-console-day.webp", "photo", "Console on a sunlit wooden shelf"],
+              ["assets/l-console.webp", "photo", "Console on a walnut sideboard at night, lit amber"],
+              ["assets/d-dials.webp", "fit", "Close-up of Console's Scroll dial"]],
+    demo: { type: "console", pillar: "Show your work", head: "Flip a switch. Watch it answer.",
+            body: "Every system on Console has a switch and a light. Flip one and its light answers, on the switch and on the status panel. Turn the Mode dial to set the whole house for Home, Away or Night. Try it on the panel itself." },
+    anatomy: { head: "Nine parts. Every one labeled.", parts: [
+      [42.2, 29, "Split-flap display", "Day, date and time on flap tiles you can read from across the room."],
+      [21, 57, "Status panel", "Weather, today's schedule and the state of the house, backlit behind glass."],
+      [73.2, 54.6, "Status lights", "One light per system. When every light is on, the panel reads All systems nominal."],
+      [6, 79.3, "Power dial", "Turns Console on and off. The amber pip beside it shows it's running."],
+      [17.1, 79.3, "Mode dial", "Sets the house for Home, Away or Night in one turn."],
+      [36, 79.7, "Scroll dial", "Moves through the schedule and settings. Its amber ring lights while you turn it."],
+      [59.8, 80.5, "Switches", "Lights, Climate, Audio and Scenes. Each has its own light above it."],
+      [82.3, 80.5, "Speaker", "For alerts, timers and voice, behind a perforated grille."],
+      [95.2, 40, "Amber acrylic side", "Glows with the panel, so you can see Console is on from any angle."]] },
+    box: ["Console", "1.5 m braided USB-C cable", "30W USB-C power adapter", "Wall mount bracket", "Microfiber care cloth"],
+    faq: { head: "Before you set it up.", items: [
+      ["What does Console work with?", "Anything that speaks Matter: lights, thermostats, locks and speakers from most major brands."],
+      ["Do I still need my phone?", "Only once, to connect your devices. After that, everything runs from the dials and switches."],
+      ["What do the switches control?", "Lights, Climate and Audio switch those systems on and off across the house. Scenes moves to the next mode."],
+      ["Can it go on a wall?", "Yes. A wall bracket comes in the box, and the panel reads just as well hung at eye level."]] },
+    pairs: ["count", "signal"] },
   { id: "signal", life: "Signal on a walnut dresser in late afternoon light, next to books and a lamp", code: "J–04", name: "Signal", fn: "Audio", price: 520, img: "assets/signal.webp",
     line: "A speaker you tune by hand.",
     head: "Find a station by hand.",
@@ -733,16 +787,18 @@ function renderProduct(p) {
   $("pv-demo").hidden = !p.demo;
   if (p.demo) {
     $("demo-head").textContent = p.demo.head; $("demo-body").textContent = p.demo.body;
-    const isClock = p.demo.type === "clock";
+    const isClock = p.demo.type === "clock", isCons = p.demo.type === "console";
+    $("cons-ctl").hidden = !isCons; $("cons").hidden = !isCons;
+    if (isCons) { consSet("home"); }
     $("demo-pillar").textContent = p.demo.pillar || "Hands first";
-    $("dial-ctl").hidden = isClock; $("clock-ctl").hidden = !isClock;
-    $("clock").hidden = !isClock; $("demo-img").hidden = isClock;
-    $("demo-stage").querySelector(".demo-glow").style.opacity = isClock ? ".45" : "";
+    $("dial-ctl").hidden = isClock || isCons; $("clock-ctl").hidden = !isClock;
+    $("clock").hidden = !isClock; $("demo-img").hidden = isClock || isCons;
+    $("demo-stage").querySelector(".demo-glow").style.opacity = (isClock || isCons) ? ".45" : "";
     if (isClock) { clockShown = ""; tickClock(); }
     $("demo-img").src = p.demo.img || p.img; $("demo-img").alt = p.demo.alt || p.alt;
     $("stops").innerHTML = (p.demo.stops || []).map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="false">${l}</button>`).join("");
     [...$("stops").children].forEach(b => b.addEventListener("click", () => setDial(+b.dataset.v)));
-    if (!isClock) setDial(60);
+    if (!isClock && !isCons) setDial(60);
   }
 
   $("pv-anat").hidden = !p.anatomy;
@@ -791,6 +847,38 @@ function renderProduct(p) {
   $("pv-next").href = "#" + next.id; $("pv-next").querySelector("strong").textContent = next.code + " " + next.name.toUpperCase();
   document.title = p.name + " · Jupiter Co.";
 }
+const MODES = {
+  home:  { sw: { lights: true,  climate: true, audio: true  }, sec: false, text: ["Home", "All systems", "Nominal"] },
+  away:  { sw: { lights: false, climate: true, audio: false }, sec: true,  text: ["Away", "Security", "Armed"] },
+  night: { sw: { lights: false, climate: true, audio: false }, sec: true,  text: ["Night", "Doors locked", "Lights off"] }
+};
+const ORDER = ["home", "away", "night"];
+let cons = { mode: "home", sw: { ...MODES.home.sw } };
+function consDraw() {
+  const L = (id, state) => { $(id).className = "led " + state; };
+  ["lights", "climate", "audio"].forEach(k => {
+    const on = cons.sw[k];
+    L("sw-" + k, on ? "keep" : "off"); L("st-" + k + "-a", on ? "keep" : "off"); L("st-" + k + "-b", on ? "keep" : "off");
+    $("cons-sw").querySelector(`[data-s="${k}"]`).setAttribute("aria-pressed", String(on));
+  });
+  const sec = MODES[cons.mode].sec;
+  L("st-security-a", "keep"); L("st-security-b", sec ? "on" : "keep");
+  L("md-home", cons.mode === "home" ? "keep" : "off");
+  L("md-away", cons.mode === "away" ? "on" : "keep"); L("md-night", cons.mode === "night" ? "on" : "keep");
+  const changed = cons.mode === "home" && ["lights", "climate", "audio"].filter(k => !cons.sw[k]).length;
+  const t = changed ? ["Home", changed + (changed === 1 ? " system" : " systems"), "Off"] : MODES[cons.mode].text;
+  $("cons-status").innerHTML = `<b>${t[0]}</b><span>${t[1]}</span><span>${t[2]}</span>`;
+  $("cons-out").textContent = MODES[cons.mode].text[0];
+  [...$("cons-modes").children].forEach(b => b.setAttribute("aria-pressed", String(b.dataset.m === cons.mode)));
+}
+function consSet(m) { cons.mode = m; cons.sw = { ...MODES[m].sw }; consDraw(); }
+function consNext() { consSet(ORDER[(ORDER.indexOf(cons.mode) + 1) % 3]); }
+function consToggle(k) { cons.sw[k] = !cons.sw[k]; consDraw(); }
+document.querySelectorAll("#cons .hit").forEach(b => b.addEventListener("click", () => {
+  const k = b.dataset.hit; (k === "mode" || k === "scenes") ? consNext() : consToggle(k);
+}));
+[...$("cons-modes").children].forEach(b => b.addEventListener("click", () => consSet(b.dataset.m)));
+[...$("cons-sw").children].forEach(b => b.addEventListener("click", () => consToggle(b.dataset.s)));
 let fmt24 = false, clockOffset = 0, clockShown = "";
 function tickClock() {
   if ($("clock").hidden || $("view-product").hidden) return;
