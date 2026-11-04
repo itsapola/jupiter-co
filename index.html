@@ -83,6 +83,12 @@ header { position: absolute; inset: 0 0 auto 0; z-index: 10; }
 .hero-tag:hover { color: var(--amber); }
 
 /* Sections */
+.support-grid { display: grid; grid-template-columns: 4fr 8fr; gap: 56px; align-items: start; }
+.support-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.support-cols div { border-top: 1px solid var(--line-light); padding-top: 22px; }
+.support-cols h3 { font-family: var(--f-display); font-size: 14px; letter-spacing: .08em; text-transform: uppercase; font-weight: 400; margin: 12px 0 10px; }
+.support-cols p { color: var(--ink-soft); font-size: 16px; }
+.support-cols .n { color: var(--copper); }
 .light { background: var(--lunar); color: var(--deep-space); }
 section { padding: 104px 0; }
 .sec-head { display: grid; grid-template-columns: 3fr 2fr; gap: 40px; align-items: end; margin-bottom: 56px; }
@@ -137,6 +143,16 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
 .mat img { aspect-ratio: 4/1; width: 100%; object-fit: cover; border-radius: 2px; }
 .mat .mono { color: var(--ink-soft); font-size: 11px; }
 .mat strong { font-weight: 500; font-size: 16px; }
+
+/* Observatory */
+.obs-grid { display: grid; grid-template-columns: 4fr 8fr; gap: 56px; align-items: start; }
+.obs-intro h2 { margin-top: 22px; }
+.articles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.article { display: flex; flex-direction: column; border: 1px solid var(--line-dark); border-radius: 2px; overflow: hidden; }
+.article img { aspect-ratio: 4/3; width: 100%; object-fit: cover; }
+.article .body { padding: 20px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.article .body .mono { color: var(--grey-on-dark); font-size: 11px; display: flex; justify-content: space-between; }
+.article h3 { font-size: 21px; line-height: 1.2; letter-spacing: -0.01em; font-weight: 400; }
 
 /* Product view */
 .pv-hero { overflow: hidden; padding: 140px 0 88px; background:
@@ -323,7 +339,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
   .nav ul { display: none; position: absolute; top: 84px; left: var(--gutter); right: var(--gutter); flex-direction: column; gap: 0; background: #1d1e22; border: 1px solid var(--line-dark); border-radius: 4px; padding: 8px 0; }
   .nav ul.open { display: flex; }
   .nav ul a { display: block; padding: 14px 20px; }
-  .demo-grid, .anat-grid, .faq, .hero-grid, .sec-head, .details-grid, .philo-top, .pv-grid, .pv-spec { grid-template-columns: 1fr; }
+  .demo-grid, .anat-grid, .faq, .support-grid, .hero-grid, .sec-head, .details-grid, .obs-grid, .philo-top, .pv-grid, .pv-spec { grid-template-columns: 1fr; }
   .sec-head p { justify-self: start; }
   .hero { display: block; min-height: 0; padding: 120px 0 0; }
   .hero-bg { position: relative; width: 100%; aspect-ratio: 3/2; margin-top: 48px; }
@@ -345,7 +361,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
 }
 @media (max-width: 700px) {
   section { padding: 80px 0; }
-  .pairs { grid-template-columns: 1fr; }
+  .articles, .support-cols, .pairs { grid-template-columns: 1fr; }
   .pair { grid-template-columns: 1fr 1.4fr; }
   .materials { grid-template-columns: 1fr; }
   .hero { padding-top: 120px; }
@@ -382,7 +398,8 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
     <ul id="menu">
       <li><a href="#objects">Objects</a></li>
       <li><a href="#philosophy">Philosophy</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#observatory">The Observatory</a></li>
+      <li><a href="#support">Support</a></li>
     </ul>
     <div class="nav-right">
       <span class="cart" id="cart" aria-live="polite">CART (0)</span>
@@ -418,7 +435,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
         <p>Light, time, sound and power, designed to live in plain sight.</p>
       </div>
       <div class="grid5" id="cards"></div>
-      <p class="coll-foot mono">Brushed aluminum · Amber acrylic · Analog controls · Concept collection, not for sale</p>
+      <p class="coll-foot mono">Brushed aluminum · Amber acrylic · Analog controls</p>
     </div>
   </section>
 
@@ -469,6 +486,48 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
     </div>
   </section>
 
+  <!-- OBSERVATORY -->
+  <section id="observatory">
+    <div class="wrap">
+      <div class="obs-grid">
+        <div class="obs-intro">
+          <div class="eyebrow"><b>04</b> / The Observatory</div>
+          <h2 class="big">Notes on the future we were promised.</h2>
+        </div>
+        <div class="articles">
+          <article class="article">
+            <img src="assets/lineup.webp" alt="The four Jupiter Co. objects in a row: Flare, Count, Signal and Dock" loading="lazy">
+            <div class="body"><span class="mono"><span>Culture</span><span>Coming soon</span></span><h3>The Space Age Home, Revisited</h3></div>
+          </article>
+          <article class="article">
+            <img src="assets/l-dock.webp" alt="Dock on a wooden shelf charging a phone, earbuds and a watch, between books and a plant" loading="lazy">
+            <div class="body"><span class="mono"><span>Design</span><span>Coming soon</span></span><h3>The Lost Language of Everyday Objects</h3></div>
+          </article>
+          <article class="article">
+            <img src="assets/o-view.webp" alt="Flare on a stone kitchen counter in morning light, beside a bowl of lemons" loading="lazy">
+            <div class="body"><span class="mono"><span>Living</span><span>Coming soon</span></span><h3>A Case for Keeping Things in View</h3></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="light" id="support">
+    <div class="wrap">
+      <div class="support-grid">
+        <div>
+          <div class="eyebrow"><b>05</b> / Support</div>
+          <h2 class="big">Built to stay on the counter.</h2>
+        </div>
+        <div class="support-cols">
+          <div><span class="mono n">Shipping</span><h3>Free in the US</h3><p>Every order ships free within the US and leaves our studio in 3–5 business days.</p></div>
+          <div><span class="mono n">Warranty</span><h3>Two years</h3><p>Every object is covered for two years, parts and labor. Dials and switches included.</p></div>
+          <div><span class="mono n">Returns</span><h3>30 days</h3><p>Live with it for a month. If it doesn't earn its place, send it back in the original box.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- PRODUCT VIEW -->
@@ -490,7 +549,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
             <span class="price" id="pv-price"></span>
             <button class="add" id="pv-add" type="button">Add to cart</button>
           </div>
-          <p class="assure mono">Concept object · Not for sale</p>
+          <p class="assure mono">Free US shipping · Two-year warranty · 30-day returns</p>
         </div>
       </div>
     </div>
@@ -600,7 +659,8 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
       <ul class="mono">
         <li><a href="#objects">Objects</a></li>
         <li><a href="#philosophy">Philosophy</a></li>
-        <li><a href="#details">Details</a></li>
+        <li><a href="#observatory">The Observatory</a></li>
+        <li><a href="#support">Support</a></li>
       </ul>
     </div>
     <div class="foot-bottom mono">
