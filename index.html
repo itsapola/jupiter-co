@@ -96,7 +96,7 @@ h2.big { font-size: clamp(36px, 4.4vw, 64px); margin-top: 22px; }
 .sec-head p { max-width: 40ch; font-size: 18px; color: var(--ink-soft); justify-self: end; }
 
 /* Collection */
-.grid5 { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line-light); }
+.grid5 { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-light); }
 .card { padding: 24px 22px 28px; border-right: 1px solid var(--line-light); display: flex; flex-direction: column; gap: 6px; transition: background .3s; }
 .card:first-child { border-left: 1px solid var(--line-light); }
 .card:hover { background: #e3ddd4; }
@@ -250,25 +250,6 @@ figure.shot figcaption span { display: block; opacity: .8; margin-top: 4px; }
   background: radial-gradient(circle, rgba(255,236,190,.95) 0 35%, rgba(224,138,44,.5) 55%, rgba(224,138,44,0) 72%); animation: pulse 2s ease-in-out infinite; mix-blend-mode: screen; }
 @keyframes pulse { 50% { opacity: .2; } }
 @media (prefers-reduced-motion: reduce) { .card-d.flip, .dot { animation: none; } }
-
-/* Product page: console demo (live lights over the real render) */
-.cons { width: 100%; position: relative; container-type: inline-size; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
-.demo-stage .cons > img { width: 100%; max-width: none; max-height: none; display: block; filter: none; }
-.led { position: absolute; width: .95%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; transition: background .25s, box-shadow .25s; }
-.led.off { background: radial-gradient(circle at 40% 35%, #3a2e26, #120d0a 70%); box-shadow: inset 0 0 0 1px rgba(0,0,0,.6); }
-.led.on { background: radial-gradient(circle, #fff1cf 0 30%, #f0a245 60%, #c66a12 100%); box-shadow: 0 0 6px 2px rgba(240,162,69,.7); }
-.led.keep { background: transparent; box-shadow: none; }
-.hit { position: absolute; transform: translate(-50%, -50%); border-radius: 6px; cursor: pointer; background: transparent; transition: box-shadow .2s; }
-.hit:hover, .hit:focus-visible { box-shadow: 0 0 0 2px rgba(224,138,44,.8); outline: none; }
-.hit:active { box-shadow: 0 0 0 2px var(--filament), inset 0 4px 8px rgba(0,0,0,.4); }
-.cons-status { position: absolute; left: 54.9%; top: 57.6%; width: 8.4%; height: 10%; background: #0b0705; color: #E6D3BC;
-  font-family: var(--f-body); font-weight: 500; font-size: 1cqw; line-height: 1.36; letter-spacing: .05em; text-transform: uppercase; display: flex; flex-direction: column; justify-content: center; }
-.cons-status b { font-weight: 500; font-size: 1cqw; }
-.toggles { display: flex; gap: 10px; flex-wrap: wrap; }
-.toggles button { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--line-dark); border-radius: 40px; padding: 8px 14px; color: var(--grey-on-dark); display: inline-flex; align-items: center; gap: 8px; }
-.toggles button::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #3a2e26; }
-.toggles button[aria-pressed="true"] { color: var(--lunar); border-color: var(--amber); }
-.toggles button[aria-pressed="true"]::before { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
 
 /* Product page: tuner demo (needle over the real render) */
 .tuner { width: 86%; position: relative; filter: drop-shadow(0 40px 50px rgba(0,0,0,.5)); }
@@ -438,7 +419,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
         <p class="sub">Home technology you'll want on display.</p>
         <a href="#objects" class="cta"><span>Explore the collection</span><span class="ring"><svg class="arrow"><use href="#arr"/></svg></span></a>
       </div>
-      <div class="hero-tag-wrap"><a href="#flare" class="hero-tag mono"><span>J–01 Flare · Ambient light</span><svg class="arrow"><use href="#arr"/></svg></a></div>
+      <div class="hero-tag-wrap"><a href="#flare" class="hero-tag mono"><span>Flare · Ambient light</span><svg class="arrow"><use href="#arr"/></svg></a></div>
     </div>
     <figure class="hero-bg"><img src="assets/l-flare.webp" alt="Flare glowing on a stone counter at sunset, with a window view of hills behind" width="1536" height="1024"></figure>
   </section>
@@ -449,9 +430,9 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
       <div class="sec-head">
         <div>
           <div class="eyebrow"><b>01</b> / The Collection</div>
-          <h2 class="big">Five objects. Nothing to hide.</h2>
+          <h2 class="big">Four objects. Nothing to hide.</h2>
         </div>
-        <p>Light, time, sound, control and power, designed to live in plain sight.</p>
+        <p>Light, time, sound and power, designed to live in plain sight.</p>
       </div>
       <div class="grid5" id="cards"></div>
       <p class="coll-foot mono">Brushed aluminum · Amber acrylic · Analog controls</p>
@@ -468,7 +449,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
         </div>
         <p>Somewhere along the way, home tech learned to hide. It went beige, then flat, then invisible, tucked into cabinets and buried in apps. Jupiter Co. builds the opposite: objects with a face, a dial and a reason to stay on the counter.</p>
       </div>
-      <figure class="philo-shot"><img src="assets/l-console.webp" alt="Console on a walnut sideboard, lit amber, next to a lamp, books and a framed moon photograph" loading="lazy"><figcaption class="mono">J–03 Console · At home</figcaption></figure>
+      <figure class="philo-shot"><img src="assets/l-signal-night.webp" alt="Signal on a bookshelf at night, glowing amber, with city lights through the window" loading="lazy"><figcaption class="mono">Signal · At home</figcaption></figure>
       <ol class="pillars">
         <li><span class="mono n">01</span><h3>In plain sight.</h3><p>If it has to be hidden, we haven't finished designing it. Every object earns its place on the counter.</p></li>
         <li><span class="mono n">02</span><h3>Show your work.</h3><p>Light, sound or a dial tells you what each object is doing at a glance. No mystery states.</p></li>
@@ -491,10 +472,10 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
           <figcaption class="mono">Signature materials<span>Brushed aluminum + translucent acrylic</span></figcaption>
         </figure>
         <div class="crops">
-          <figure class="shot"><img src="assets/d-knob.webp" alt="Knurled dimmer dial on Flare" loading="lazy"><figcaption class="mono">J–01 · Dimmer</figcaption></figure>
-          <figure class="shot"><img src="assets/d-grille.webp" alt="Perforated steel speaker grille on Signal" loading="lazy"><figcaption class="mono">J–04 · Grille</figcaption></figure>
-          <figure class="shot"><img src="assets/d-digits.webp" alt="Flip digits reading 08 on Count" loading="lazy"><figcaption class="mono">J–02 · Flip digits</figcaption></figure>
-          <figure class="shot"><img src="assets/d-dials.webp" alt="Scroll dial with amber ring on Console" loading="lazy"><figcaption class="mono">J–03 · Scroll dial</figcaption></figure>
+          <figure class="shot"><img src="assets/d-knob.webp" alt="Knurled dimmer dial on Flare" loading="lazy"><figcaption class="mono">Flare · Dimmer</figcaption></figure>
+          <figure class="shot"><img src="assets/d-grille.webp" alt="Perforated steel speaker grille on Signal" loading="lazy"><figcaption class="mono">Signal · Grille</figcaption></figure>
+          <figure class="shot"><img src="assets/d-digits.webp" alt="Flip digits reading 08 on Count" loading="lazy"><figcaption class="mono">Count · Flip digits</figcaption></figure>
+          <figure class="shot"><img src="assets/d-dock.webp" alt="Earbuds charging on Dock's lit pad" loading="lazy"><figcaption class="mono">Dock · Charging pad</figcaption></figure>
         </div>
       </div>
       <div class="materials">
@@ -515,11 +496,11 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
         </div>
         <div class="articles">
           <article class="article">
-            <img src="assets/lineup.webp" alt="The five Jupiter Co. objects in a row" loading="lazy">
+            <img src="assets/lineup.webp" alt="The four Jupiter Co. objects in a row: Flare, Count, Signal and Dock" loading="lazy">
             <div class="body"><span class="mono"><span>Culture</span><span>Coming soon</span></span><h3>The Space Age Home, Revisited</h3></div>
           </article>
           <article class="article">
-            <img src="assets/l-console-day.webp" alt="Console on a sunlit wooden shelf beside books and a trailing plant" loading="lazy">
+            <img src="assets/l-dock.webp" alt="Dock on a wooden shelf charging a phone, earbuds and a watch, between books and a plant" loading="lazy">
             <div class="body"><span class="mono"><span>Design</span><span>Coming soon</span></span><h3>The Lost Language of Everyday Objects</h3></div>
           </article>
           <article class="article">
@@ -560,7 +541,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
           <div class="thumbs" id="thumbs" role="group" aria-label="Product images"></div>
         </div>
         <div class="pv-info">
-          <div class="meta mono"><span id="pv-code"></span><span class="fn" id="pv-fn"></span></div>
+          <div class="meta mono"><span class="fn" id="pv-fn"></span></div>
           <h1 class="pv-name" id="pv-name"></h1>
           <h2 id="pv-head"></h2>
           <p id="pv-body"></p>
@@ -605,12 +586,6 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
           <div class="stops" style="margin-top:10px"><button type="button" id="dock-run">Run the night</button><button type="button" id="dock-reset">Back to bedtime</button></div>
           <span class="mono" id="dock-clock" style="color:var(--grey-on-dark)">21:08 · Bedtime</span>
         </div>
-        <div class="dial" id="cons-ctl" hidden>
-          <span class="mono" style="color:var(--grey-on-dark)">Mode</span><output id="cons-out" hidden>Home</output>
-          <div class="stops" id="cons-modes"><button type="button" data-m="home" aria-pressed="true">Home</button><button type="button" data-m="away" aria-pressed="false">Away</button><button type="button" data-m="night" aria-pressed="false">Night</button></div>
-          <span class="mono" style="color:var(--grey-on-dark);margin-top:6px">Switches</span>
-          <div class="toggles" id="cons-sw"><button type="button" data-s="lights" aria-pressed="true">Lights</button><button type="button" data-s="climate" aria-pressed="true">Climate</button><button type="button" data-s="audio" aria-pressed="true">Audio</button></div>
-        </div>
         <div class="dial" id="clock-ctl" hidden>
           <div class="dial-row"><span class="mono">Your local time</span><output id="clock-out"></output></div>
           <div class="stops"><button type="button" id="fmt12" aria-pressed="true">12 hour</button><button type="button" id="fmt24" aria-pressed="false">24 hour</button><button type="button" id="turn">Turn a minute</button></div>
@@ -624,12 +599,6 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
         <div class="tuner" id="tuner" hidden role="img" aria-label="Signal with its tuning needle following the dial">
           <img src="assets/signal-front-tune.webp" alt="">
           <i class="needle" id="needle"></i><i class="src-dim" id="dim-fm" style="left:77.8%;top:44.9%"></i><i class="src-dim" id="dim-bt" style="left:77.8%;top:48.1%"></i><i class="src-dim" id="dim-aux" style="left:84.2%;top:48.1%"></i>
-        </div>
-        <div class="cons" id="cons" hidden role="group" aria-label="A working Console. Tap the switches or the Mode dial.">
-          <img src="assets/console-front.webp" alt="Console from the front, with its switches and status lights">
-          <i class="led keep" id="sw-lights" style="left:55.14%;top:73.63%"></i><i class="led keep" id="sw-climate" style="left:62.71%;top:73.63%"></i><i class="led keep" id="sw-audio" style="left:70.29%;top:73.63%"></i><i class="led keep" id="st-lights-a" style="left:68.86%;top:50.55%"></i><i class="led keep" id="st-lights-b" style="left:79.43%;top:50.55%"></i><i class="led keep" id="st-climate-a" style="left:68.86%;top:55.23%"></i><i class="led keep" id="st-climate-b" style="left:79.43%;top:55.23%"></i><i class="led keep" id="st-security-a" style="left:68.86%;top:60.06%"></i><i class="led keep" id="st-security-b" style="left:79.43%;top:60.22%"></i><i class="led keep" id="st-audio-a" style="left:68.86%;top:64.9%"></i><i class="led keep" id="st-audio-b" style="left:79.43%;top:64.9%"></i><i class="led keep" id="md-home" style="left:26.43%;top:74.88%"></i><i class="led keep" id="md-away" style="left:26.43%;top:79.41%"></i><i class="led keep" id="md-night" style="left:26.43%;top:84.09%"></i>
-          <div class="cons-status" id="cons-status" aria-live="polite"><b>Home</b><span>All systems</span><span>Nominal</span></div>
-          <button type="button" class="hit" data-hit="lights" aria-label="Lights switch" style="left:55.14%;top:81.12%;width:4.2%;height:12.5%"></button><button type="button" class="hit" data-hit="climate" aria-label="Climate switch" style="left:62.71%;top:81.12%;width:4.2%;height:12.5%"></button><button type="button" class="hit" data-hit="audio" aria-label="Audio switch" style="left:70.29%;top:81.12%;width:4.2%;height:12.5%"></button><button type="button" class="hit" data-hit="scenes" aria-label="Scenes switch: next mode" style="left:77.86%;top:81.12%;width:4.2%;height:12.5%"></button><button type="button" class="hit" data-hit="mode" aria-label="Mode dial: next mode" style="left:20.86%;top:79.88%;width:6.6%;height:14.4%;border-radius:50%"></button>
         </div>
         <div class="clock" id="clock" hidden role="img" aria-label="A working Count flip clock showing your local time">
           <img src="assets/count-front.webp" alt="">
@@ -703,7 +672,7 @@ footer { border-top: 1px solid var(--line-dark); padding: 56px 0 40px; }
 
 <script>
 const P = [
-  { id: "flare", lifeSrc: "assets/l-flare-day.webp", life: "Flare on a sunlit walnut shelf beside a stack of books and a trailing plant", code: "J–01", name: "Flare", fn: "Ambient light", price: 340, img: "assets/flare.webp",
+  { id: "flare", lifeSrc: "assets/l-flare-day.webp", life: "Flare on a sunlit walnut shelf beside a stack of books and a trailing plant", name: "Flare", fn: "Ambient light", price: 340, img: "assets/flare.webp",
     line: "A ring of warm light with a dial you can feel.",
     head: "Warm light, dimmed by hand.",
     body: "Flare is a ring of warm light set inside a shell of amber acrylic. Turn the dial on its base for a low glow at night or full light for reading.",
@@ -711,7 +680,7 @@ const P = [
     f: ["Amber acrylic and brushed aluminum, made to sit on a sideboard or nightstand where people can see it.",
         "One amber pip on the base tells you Flare has power. The light shows the rest.",
         "A knurled steel dial takes it from a low glow to full brightness, and it stays where you leave it."],
-    detail: ["assets/d-knob.webp", "Knurled steel dimmer dial", "J–01 · Dimmer"],
+    detail: ["assets/d-knob.webp", "Knurled steel dimmer dial", "Flare · Dimmer"],
     specs: [["Dimensions", "Ø 200 × 110 mm"], ["Weight", "1.2 kg"], ["Materials", "Brushed aluminum, amber acrylic, steel"], ["Light", "Integrated LED ring, warm white 2700K"], ["Control", "Analog dimmer dial, 1–100%"], ["Power", "USB-C, 20W"]],
     gallery: [["assets/flare.webp", "cut", "Flare on its own"],
               ["assets/flare-front.webp", "cut", "Flare from the front, showing the light ring, status pip and dial"],
@@ -737,7 +706,7 @@ const P = [
       ["Where does it work best?", "Nightstands, sideboards, desks and kitchen counters. Anywhere within reach of an outlet."],
       ["How do I clean it?", "Wipe the acrylic and aluminum with the included cloth. Skip glass cleaner on the acrylic."]] },
     pairs: ["count", "signal"] },
-  { id: "count", lifeSrc: "assets/l-count-day.webp", life: "Count on a walnut dresser in afternoon light, beside a stone tray and books", code: "J–02", name: "Count", fn: "Timekeeping", price: 280, img: "assets/count.webp",
+  { id: "count", lifeSrc: "assets/l-count-day.webp", life: "Count on a walnut dresser in afternoon light, beside a stone tray and books", name: "Count", fn: "Timekeeping", price: 280, img: "assets/count.webp",
     line: "Big, glowing digits you can read from across the room.",
     head: "Time you can read from across the room.",
     body: "Count is a flip clock in a brushed aluminum capsule. The digits are printed cards on geared drums, edge-lit by amber acrylic, so the time reads at a glance day or night. The top is a wireless charger, so your phone can charge on it overnight.",
@@ -745,7 +714,7 @@ const P = [
     f: ["Big flip digits behind amber acrylic, readable from the couch.",
         "Each minute turns over with a soft click. Set a phone on top and the status pip glows amber until it's charged.",
         "Sets itself on first power-up. A switch on the back changes between 12 and 24 hour."],
-    detail: ["assets/d-digits.webp", "Flip digits reading 08", "J–02 · Flip digits"],
+    detail: ["assets/d-digits.webp", "Flip digits reading 08", "Count · Flip digits"],
     specs: [["Dimensions", "250 × 100 × 95 mm"], ["Weight", "0.9 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Mechanical flip digits, 12 or 24 hour"], ["Light", "Amber edge lighting, dimmable"], ["Charging", "Wireless charger built into the top, Qi2, up to 15W"], ["Power", "USB-C, 30W"]],
     gallery: [["assets/count.webp", "cut", "Count on its own"],
               ["assets/count-front.webp", "cut", "Count from the front, showing the flip drums, colon lights and status pip"],
@@ -771,42 +740,7 @@ const P = [
       ["Can I dim the edge light?", "Yes. A small wheel on the back dims the amber light or turns it off."],
       ["How do I clean it?", "Wipe the aluminum and acrylic with the included cloth. Skip glass cleaner on the acrylic."]] },
     pairs: ["flare", "dock"] },
-  { id: "console", lifeSrc: "assets/l-console-day.webp", life: "Console on a sunlit wooden shelf beside books and a trailing plant", code: "J–03", name: "Console", fn: "Home control", price: 890, img: "assets/console.webp",
-    line: "Weather, time, music and home on one front-facing screen.",
-    head: "The whole house on one panel.",
-    body: "Console puts the day in front of you: the date and time on split-flap tiles, the weather, your schedule and the state of the house. Dials and switches handle the rest. Set it on a sideboard, or twist off the feet and hang it on the wall.",
-    alt: "Console home control unit with split-flap date and time, a status panel, dials and switches",
-    f: ["Date and time on split-flap tiles, with the weather, your day and the house just below.",
-        "Every system has its own light. When everything is as it should be, the panel says All systems nominal.",
-        "Power, Mode and Scroll dials, plus four switches for lights, climate, audio and scenes."],
-    detail: ["assets/d-dials.webp", "Scroll dial with amber ring", "J–03 · Scroll dial"],
-    specs: [["Dimensions", "380 × 190 × 110 mm"], ["Weight", "2.4 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Display", "Split-flap date and time, backlit status panel"], ["Controls", "Power, Mode and Scroll dials, 4 switches"], ["Mounting", "Removable feet for the tabletop, wall bracket included"], ["Speaker", "Built-in, for alerts and voice"], ["Connectivity", "Wi-Fi, Matter, Thread"], ["Power", "USB-C, 30W"]],
-    gallery: [["assets/console.webp", "cut", "Console on its own"],
-              ["assets/console-front.webp", "cut", "Console from the front"],
-              ["assets/console-left.webp", "cut", "Console from the left, showing its amber acrylic side"],
-              ["assets/l-console-day.webp", "photo", "Console on a sunlit wooden shelf"],
-              ["assets/l-console.webp", "photo", "Console on a walnut sideboard at night, lit amber"],
-              ["assets/d-dials.webp", "fit", "Close-up of Console's Scroll dial"]],
-    demo: { type: "console", pillar: "Show your work", head: "Flip a switch. Watch it answer.",
-            body: "Every system on Console has a switch and a light. Flip one and its light answers, on the switch and on the status panel. Turn the Mode dial to set the whole house for Home, Away or Night. Try it on the panel itself." },
-    anatomy: { img: "assets/console-front.webp", alt: "Console from the front with numbered parts", head: "Nine parts. Every one labeled.", parts: [
-      [49.8, 23.8, "Split-flap display", "Day, date and time on flap tiles you can read from across the room."],
-      [25.2, 56.7, "Status panel", "Weather, today's schedule and the state of the house, backlit behind glass."],
-      [76.4, 72.5, "Status lights", "One light per system. When every light is on, the panel reads All systems nominal."],
-      [8.1, 80.2, "Power dial", "Turns Console on and off. The amber pip beside it shows it's running."],
-      [20.9, 79.9, "Mode dial", "Sets the house for Home, Away or Night in one turn."],
-      [42, 80.2, "Scroll dial", "Moves through the schedule and settings. Its amber ring lights while you turn it."],
-      [62.9, 81.2, "Switches", "Lights, Climate, Audio and Scenes. Each has its own light above it."],
-      [89.5, 81.5, "Speaker", "For alerts, timers and voice, behind a perforated grille."],
-      [10.6, 96.5, "Removable feet", "Twist them off by hand to hang Console on the wall with the included bracket."]] },
-    box: ["Console", "1.5 m braided USB-C cable", "30W USB-C power adapter", "Wall mount bracket", "Microfiber care cloth"],
-    faq: { head: "Before you set it up.", items: [
-      ["What does Console work with?", "Anything that speaks Matter: lights, thermostats, locks and speakers from most major brands."],
-      ["Do I still need my phone?", "Only once, to connect your devices. After that, everything runs from the dials and switches."],
-      ["What do the switches control?", "Lights, Climate and Audio switch those systems on and off across the house. Scenes moves to the next mode."],
-      ["Can it go on a wall?", "Yes. Twist off the feet by hand, then hang Console on the bracket that comes in the box. The panel reads just as well at eye level."]] },
-    pairs: ["count", "signal"] },
-  { id: "signal", lifeSrc: "assets/l-signal-day.webp", life: "Signal on a sunlit stone kitchen counter beside a bowl of lemons", life0: "Signal on a walnut dresser in late afternoon light, next to books and a lamp", code: "J–04", name: "Signal", fn: "Audio", price: 520, img: "assets/signal.webp",
+  { id: "signal", lifeSrc: "assets/l-signal-day.webp", life: "Signal on a sunlit stone kitchen counter beside a bowl of lemons", life0: "Signal on a walnut dresser in late afternoon light, next to books and a lamp", name: "Signal", fn: "Audio", price: 520, img: "assets/signal.webp",
     line: "A speaker you tune by hand.",
     head: "Find a station by hand.",
     body: "Signal is a spherical speaker under an amber dome. Turn the dial to move through FM or switch to Bluetooth or a cable, then tilt the sphere on its yoke to point the sound at you.",
@@ -814,7 +748,7 @@ const P = [
     f: ["A sphere of amber acrylic and steel mesh that tilts on its yoke to face the room.",
         "The tuning band glows at the station you're on. FM, Bluetooth and AUX are marked on the band.",
         "One side dial tunes. The other sets the volume."],
-    detail: ["assets/d-grille.webp", "Perforated steel grille", "J–04 · Grille"],
+    detail: ["assets/d-grille.webp", "Perforated steel grille", "Signal · Grille"],
     specs: [["Dimensions", "Ø 154 × 152 mm"], ["Weight", "1.6 kg"], ["Materials", "Amber acrylic, steel mesh, brushed aluminum"], ["Speaker", "Full-range driver and passive radiator, 20W"], ["Sources", "FM, Bluetooth 5.3, AUX"], ["Controls", "Tuning dial, volume dial, tilting yoke"], ["Power", "USB-C, 30W"]],
     gallery: [["assets/signal.webp", "cut", "Signal on its own"],
               ["assets/signal-front.webp", "cut", "Signal from the front, with the tuning band and source labels"],
@@ -839,8 +773,8 @@ const P = [
       ["Why FM?", "Because finding a station by hand is half the fun. Bluetooth is there when you want your own music."],
       ["How loud does it get?", "Loud enough to fill a living room. The tilting yoke lets you aim it so you don't need full volume."],
       ["How do I clean it?", "Wipe the dome and aluminum with the included cloth. A soft brush clears dust from the grille."]] },
-    pairs: ["flare", "console"] },
-  { id: "dock", lifeSrc: "assets/l-dock-day.webp", life: "Dock on a sunlit nightstand beside a stone lamp, charging a phone, earbuds and a watch", life0: "Dock on a wooden shelf charging a phone, earbuds and a watch, between books and a plant", code: "J–05", name: "Dock", fn: "Power", price: 240, img: "assets/dock.webp",
+    pairs: ["flare", "dock"] },
+  { id: "dock", lifeSrc: "assets/l-dock-day.webp", life: "Dock on a sunlit nightstand beside a stone lamp, charging a phone, earbuds and a watch", life0: "Dock on a wooden shelf charging a phone, earbuds and a watch, between books and a plant", name: "Dock", fn: "Power", price: 240, img: "assets/dock.webp",
     line: "Phone, watch and earbuds, charged in plain view.",
     head: "Everything charged, in plain view.",
     body: "Dock holds your phone, watch and earbuds in an amber-lit frame, with two USB-C ports up front for everything else.",
@@ -848,7 +782,7 @@ const P = [
     f: ["Phone, watch and earbuds stand up in a lit frame where you can see them.",
         "Each pad glows while it charges and dims when the device is full.",
         "The dial sets the frame's light, all the way down to off at night."],
-    detail: ["assets/d-dock.webp", "Earbuds charging on a lit pad", "J–05 · Charging pad"],
+    detail: ["assets/d-dock.webp", "Earbuds charging on a lit pad", "Dock · Charging pad"],
     specs: [["Dimensions", "300 × 150 × 170 mm"], ["Weight", "1.8 kg"], ["Materials", "Brushed aluminum, amber acrylic"], ["Charging", "Phone (Qi2, 15W), earbuds (5W), watch (5W), plus 2 × USB-C (30W each)"], ["Control", "Light dial, from full glow to off"], ["Power", "USB-C PD, 100W adapter"]],
     gallery: [["assets/dock.webp", "cut", "Dock on its own"],
               ["assets/dock-front.webp", "cut", "Dock from the front, charging a phone, earbuds and a watch"],
@@ -882,7 +816,7 @@ const arrow = '<svg class="arrow"><use href="#arr"/></svg>';
 $("cards").innerHTML = P.map(p => `
   <a class="card" href="#${p.id}">
     <div class="pic"><img src="${p.img}" alt="${p.alt}" loading="lazy"></div>
-    <span class="row mono"><span>${p.code}</span><span>$${p.price}</span></span>
+    <span class="row mono"><span>$${p.price}</span></span>
     <h3>${p.name.toUpperCase()}</h3>
     <span class="mono fn">${p.fn}</span>
     <p>${p.line}</p>
@@ -908,28 +842,26 @@ function renderProduct(p) {
   $("pv-demo").hidden = !p.demo;
   if (p.demo) {
     $("demo-head").textContent = p.demo.head; $("demo-body").textContent = p.demo.body;
-    const isClock = p.demo.type === "clock", isCons = p.demo.type === "console", isTune = p.demo.type === "tuner", isDock = p.demo.type === "dock";
+    const isClock = p.demo.type === "clock", isTune = p.demo.type === "tuner", isDock = p.demo.type === "dock";
     $("dock-ctl").hidden = !isDock; $("dockd").hidden = !isDock;
     if (isDock) dockReset();
     $("tune-ctl").hidden = !isTune; $("tuner").hidden = !isTune;
     if (isTune) { setSrc("fm"); setFreq(96.5); }
-    $("cons-ctl").hidden = !isCons; $("cons").hidden = !isCons;
-    if (isCons) { consSet("home"); }
     $("demo-pillar").textContent = p.demo.pillar || "Hands first";
-    $("dial-ctl").hidden = isClock || isCons || isTune || isDock; $("clock-ctl").hidden = !isClock;
-    $("clock").hidden = !isClock; $("demo-img").hidden = isClock || isCons || isTune || isDock;
-    $("demo-stage").querySelector(".demo-glow").style.opacity = (isClock || isCons || isTune || isDock) ? ".45" : "";
+    $("dial-ctl").hidden = isClock || isTune || isDock; $("clock-ctl").hidden = !isClock;
+    $("clock").hidden = !isClock; $("demo-img").hidden = isClock || isTune || isDock;
+    $("demo-stage").querySelector(".demo-glow").style.opacity = (isClock || isTune || isDock) ? ".45" : "";
     if (isClock) { clockShown = ""; tickClock(); }
     $("demo-img").src = p.demo.img || p.img; $("demo-img").alt = p.demo.alt || p.alt;
     $("stops").innerHTML = (p.demo.stops || []).map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="false">${l}</button>`).join("");
     [...$("stops").children].forEach(b => b.addEventListener("click", () => setDial(+b.dataset.v)));
-    if (!isClock && !isCons && !isTune && !isDock) setDial(60);
+    if (!isClock && !isTune && !isDock) setDial(60);
   }
 
   $("pv-anat").hidden = !p.anatomy;
   if (p.anatomy) {
     $("anat-img").src = p.anatomy.img || p.img; $("anat-img").alt = p.anatomy.alt || p.alt;
-    $("anat-code").textContent = p.code; $("anat-head").textContent = p.anatomy.head;
+    $("anat-code").textContent = p.name; $("anat-head").textContent = p.anatomy.head;
     $("anat-fig").querySelectorAll(".pin").forEach(n => n.remove());
     p.anatomy.parts.forEach(([x, y, name], k) => {
       const b = document.createElement("button");
@@ -954,8 +886,8 @@ function renderProduct(p) {
   $("pairs-wrap").hidden = !p.pairs;
   if (p.pairs) $("pairs").innerHTML = p.pairs.map(id => P.find(x => x.id === id)).map(q => `
     <a class="pair" href="#${q.id}"><img src="${q.img}" alt="${q.alt}" loading="lazy">
-      <div><span class="mono">${q.code} · $${q.price}</span><strong>${q.name.toUpperCase()}</strong><p>${q.line}</p></div></a>`).join("");
-  $("pv-code").textContent = p.code; $("pv-code2").textContent = p.code;
+      <div><span class="mono">${q.fn} · $${q.price}</span><strong>${q.name.toUpperCase()}</strong><p>${q.line}</p></div></a>`).join("");
+  $("pv-code2").textContent = p.name;
   $("pv-fn").textContent = p.fn;
   $("pv-name").textContent = p.name.toUpperCase();
   $("pv-head").textContent = p.head;
@@ -964,12 +896,12 @@ function renderProduct(p) {
   $("pv-add").textContent = "Add to cart";
   $("pv-features").innerHTML = p.f.map((t, k) => `<li><span class="mono n">0${k + 1}</span><h3>${PILLARS[k]}</h3><p>${t}</p></li>`).join("");
   $("pv-life").src = p.lifeSrc || ("assets/l-" + p.id + ".webp"); $("pv-life").alt = p.life;
-  $("pv-life-cap").textContent = p.code + " " + p.name + " · At home";
+  $("pv-life-cap").textContent = p.name + " · At home";
   $("pv-detail").src = p.detail[0]; $("pv-detail").alt = p.detail[1];
   $("pv-detail-cap").textContent = p.detail[2];
   $("pv-specs").innerHTML = p.specs.map(([k, v]) => `<div><dt class="mono">${k}</dt><dd>${v}</dd></div>`).join("");
-  $("pv-prev").href = "#" + prev.id; $("pv-prev").querySelector("strong").textContent = prev.code + " " + prev.name.toUpperCase();
-  $("pv-next").href = "#" + next.id; $("pv-next").querySelector("strong").textContent = next.code + " " + next.name.toUpperCase();
+  $("pv-prev").href = "#" + prev.id; $("pv-prev").querySelector("strong").textContent = prev.name.toUpperCase();
+  $("pv-next").href = "#" + next.id; $("pv-next").querySelector("strong").textContent = next.name.toUpperCase();
   document.title = p.name + " · Jupiter Co.";
 }
 // Dock: three devices charging overnight, sped up
@@ -1027,38 +959,6 @@ function setSrc(v) {
 }
 $("freq").addEventListener("input", e => setFreq(+e.target.value));
 [...$("srcs").children].forEach(b => b.addEventListener("click", () => setSrc(b.dataset.src)));
-const MODES = {
-  home:  { sw: { lights: true,  climate: true, audio: true  }, sec: false, text: ["Home", "All systems", "Nominal"] },
-  away:  { sw: { lights: false, climate: true, audio: false }, sec: true,  text: ["Away", "Security", "Armed"] },
-  night: { sw: { lights: false, climate: true, audio: false }, sec: true,  text: ["Night", "Locked", "Lights off"] }
-};
-const ORDER = ["home", "away", "night"];
-let cons = { mode: "home", sw: { ...MODES.home.sw } };
-function consDraw() {
-  const L = (id, state) => { $(id).className = "led " + state; };
-  ["lights", "climate", "audio"].forEach(k => {
-    const on = cons.sw[k];
-    L("sw-" + k, on ? "keep" : "off"); L("st-" + k + "-a", on ? "keep" : "off"); L("st-" + k + "-b", on ? "keep" : "off");
-    $("cons-sw").querySelector(`[data-s="${k}"]`).setAttribute("aria-pressed", String(on));
-  });
-  const sec = MODES[cons.mode].sec;
-  L("st-security-a", "keep"); L("st-security-b", sec ? "on" : "keep");
-  L("md-home", cons.mode === "home" ? "keep" : "off");
-  L("md-away", cons.mode === "away" ? "on" : "keep"); L("md-night", cons.mode === "night" ? "on" : "keep");
-  const changed = cons.mode === "home" && ["lights", "climate", "audio"].filter(k => !cons.sw[k]).length;
-  const t = changed ? ["Home", changed + (changed === 1 ? " system" : " systems"), "Off"] : MODES[cons.mode].text;
-  $("cons-status").innerHTML = `<b>${t[0]}</b><span>${t[1]}</span><span>${t[2]}</span>`;
-  $("cons-out").textContent = MODES[cons.mode].text[0];
-  [...$("cons-modes").children].forEach(b => b.setAttribute("aria-pressed", String(b.dataset.m === cons.mode)));
-}
-function consSet(m) { cons.mode = m; cons.sw = { ...MODES[m].sw }; consDraw(); }
-function consNext() { consSet(ORDER[(ORDER.indexOf(cons.mode) + 1) % 3]); }
-function consToggle(k) { cons.sw[k] = !cons.sw[k]; consDraw(); }
-document.querySelectorAll("#cons .hit").forEach(b => b.addEventListener("click", () => {
-  const k = b.dataset.hit; (k === "mode" || k === "scenes") ? consNext() : consToggle(k);
-}));
-[...$("cons-modes").children].forEach(b => b.addEventListener("click", () => consSet(b.dataset.m)));
-[...$("cons-sw").children].forEach(b => b.addEventListener("click", () => consToggle(b.dataset.s)));
 let fmt24 = false, clockOffset = 0, clockShown = "";
 function tickClock() {
   if ($("clock").hidden || $("view-product").hidden) return;
